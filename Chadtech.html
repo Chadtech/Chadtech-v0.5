@@ -1,13 +1,11 @@
 <html>
 	<head>
-		<title>STAY NOIDED</title>
+		<title>Chadtech v0.5</title>
 		<script type="text/javascript">
 			setInterval(draw,100);
-			//setInterval(keyEvent,100);
-			var movementMagnitude = 10;
-			var xSpot = 300;
-			var ySpot = 0;
-			var gameEpoch = Date.now();
+			var xMargin = 96;
+			var yMargin = 32;
+			var chadtechEpoch = Date.now();
 			var keysToKeyCodes = {
 				'backspace':8,
 				'tab':9,
@@ -142,10 +140,12 @@
 			// then a, will invoke two characters ('Aa'), even though the keyboard practitioner intends to invoke only 
 			// capital A.
 
-			function character(firstStimulus,secondStimulus,precludingStimulus,bigImage){
+			function character(firstStimulus,secondStimulus,precludingStimulus,bigImage,lilImage){
 				this.firstStimulus = firstStimulus;
 				this.secondStimulus = secondStimulus;
 				this.precludingStimulus = precludingStimulus;
+				this.bigImage = bigImage;
+				this.lilImage = lilImage;
 			}
 
 			function zeroPadder(number,zerosToFill){
@@ -157,20 +157,16 @@
 			}
 
 			var characters = [];
-			console.log('w'+zeroPadder(0,4)+'.PNG','........... FILE NAME')
-			characters.push(new character([kkcd[0]['a']],[],[kkcd[0]['shift']], '' )); // lowercase a requires a, then nothing, and not shift
-			characters.push(new character([kkcd[0]['shift']],[kkcd[0]['a']],[], '' )); // capital A, requires shift, then a, and not nothing (anything)
-			characters.push(new character([kkcd[0]['b']],[],[kkcd[0]['shift']], '' )); // lowercase b requires b, then nothing, and not shift
-			characters.push(new character([kkcd[0]['shift']],[kkcd[0]['b']],[], '' )); // capital B, requires shift, then b, and not nothing (anything)
+			characters.push(new character([kkcd[0]['a']],[],[kkcd[0]['shift']], '', '' )); // lowercase a requires a, then nothing, and not shift
+			characters.push(new character([kkcd[0]['shift']],[kkcd[0]['a']],[], '', '' )); // capital A, requires shift, then a, and not nothing (anything)
+			characters.push(new character([kkcd[0]['b']],[],[kkcd[0]['shift']], '', '' )); // lowercase b requires b, then nothing, and not shift
+			characters.push(new character([kkcd[0]['shift']],[kkcd[0]['b']],[], '', '' )); // capital B, requires shift, then b, and not nothing (anything)
 
 
 			for (var characterItem = 0; characterItem<characters.length; characterItem++){
-				console.log(characters[characterItem], 'BONK');
 				characters[characterItem].bigImage = new Image();
 				characters[characterItem].bigImage.src='w'+zeroPadder(characterItem,4)+'.PNG';
 				}
-
-			console.log('CHARACTERS',characters);
 
 			var rawDocument = [];
 			var currentlyPressedKeys=[];
@@ -178,20 +174,32 @@
 
 
 			function draw(){
-				var ctx = document.getElementById("prac").getContext("2d");
-				ctx.fillStyle = "rgb(255,255,255)";
-				ctx.fillRect(0,0,800,800);
+				var chadtechCanvas = document.getElementById("prac").getContext("2d");
+				chadtechCanvas.fillStyle = "rgb(255,255,255)";
+				chadtechCanvas.fillRect(0,0,800,800);
 				var time = new Date();
 				for (var characterItem=0; characterItem<characters.length; characterItem++){
 					//console.log(characters.length);
-					ctx.drawImage(characters[characterItem].bigImage,characterItem*12+300,300);
+					chadtechCanvas.drawImage(characters[characterItem].bigImage,characterItem*12+300,300);
 				}
 			}
+
+			function documentUpdate(){
+				for (var key = 0; key<currentlyPressedKeys.length; key++){
+					for (var characterItem = 0; characterItem<characters.length; characterItem++){
+						if (characters[characterItem].firstStimulus.indexOf(key) != -1){
+							// WIP
+						}
+					}
+				}
+			}
+
 			function keyEventDown(event){
 				if (currentlyPressedKeys.indexOf(event.keyCode)== -1){
 					currentlyPressedKeys.push(event.keyCode);
 				}
 				console.log(currentlyPressedKeys);
+
 			}
 			function keyEventUp(event){
 				var indexToRemove = currentlyPressedKeys.indexOf(event.keyCode);
