@@ -157,31 +157,114 @@
 			}
 
 			var characters = [];
-			characters.push(new character([kkcd[0]['a']],[],[kkcd[0]['shift']], '', '' )); // lowercase a requires a, then nothing, and not shift
-			characters.push(new character([kkcd[0]['shift']],[kkcd[0]['a']],[], '', '' )); // capital A, requires shift, then a, and not nothing (anything)
-			characters.push(new character([kkcd[0]['b']],[],[kkcd[0]['shift']], '', '' )); // lowercase b requires b, then nothing, and not shift
-			characters.push(new character([kkcd[0]['shift']],[kkcd[0]['b']],[], '', '' )); // capital B, requires shift, then b, and not nothing (anything)
 
+			characters.push(new character([kkcd[0]['a']],[],[kkcd[0]['shift']], '', '' )); // lowercase a requires a, then nothing, and not shift
+			characters.push(new character([kkcd[0]['b']],[],[kkcd[0]['shift']], '', '' ));
+			characters.push(new character([kkcd[0]['c']],[],[kkcd[0]['shift']], '', '' ));
+			characters.push(new character([kkcd[0]['d']],[],[kkcd[0]['shift']], '', '' ));
+			characters.push(new character([kkcd[0]['e']],[],[kkcd[0]['shift']], '', '' ));
+			characters.push(new character([kkcd[0]['f']],[],[kkcd[0]['shift']], '', '' ));
+			characters.push(new character([kkcd[0]['g']],[],[kkcd[0]['shift']], '', '' ));
+			characters.push(new character([kkcd[0]['h']],[],[kkcd[0]['shift']], '', '' ));
+			characters.push(new character([kkcd[0]['i']],[],[kkcd[0]['shift']], '', '' ));
+			characters.push(new character([kkcd[0]['j']],[],[kkcd[0]['shift']], '', '' ));
+			characters.push(new character([kkcd[0]['k']],[],[kkcd[0]['shift']], '', '' ));
+			characters.push(new character([kkcd[0]['l']],[],[kkcd[0]['shift']], '', '' ));
+			characters.push(new character([kkcd[0]['m']],[],[kkcd[0]['shift']], '', '' ));
+			characters.push(new character([kkcd[0]['o']],[],[kkcd[0]['shift']], '', '' ));
+			characters.push(new character([kkcd[0]['p']],[],[kkcd[0]['shift']], '', '' ));
+			characters.push(new character([kkcd[0]['q']],[],[kkcd[0]['shift']], '', '' ));
+			characters.push(new character([kkcd[0]['r']],[],[kkcd[0]['shift']], '', '' ));
+			characters.push(new character([kkcd[0]['s']],[],[kkcd[0]['shift']], '', '' ));
+			characters.push(new character([kkcd[0]['t']],[],[kkcd[0]['shift']], '', '' ));
+			characters.push(new character([kkcd[0]['u']],[],[kkcd[0]['shift']], '', '' ));
+			characters.push(new character([kkcd[0]['v']],[],[kkcd[0]['shift']], '', '' ));
+			characters.push(new character([kkcd[0]['w']],[],[kkcd[0]['shift']], '', '' ));
+			characters.push(new character([kkcd[0]['x']],[],[kkcd[0]['shift']], '', '' ));
+			characters.push(new character([kkcd[0]['y']],[],[kkcd[0]['shift']], '', '' ));
+			characters.push(new character([kkcd[0]['z']],[],[kkcd[0]['shift']], '', '' ));
+
+			characters.push(new character([kkcd[0]['shift']],[kkcd[0]['a']],[], '', '' )); // capital A, requires shift, then a, and not nothing (anything)
+			characters.push(new character([kkcd[0]['shift']],[kkcd[0]['b']],[], '', '' )); 
+			characters.push(new character([kkcd[0]['shift']],[kkcd[0]['c']],[], '', '' )); 
+			characters.push(new character([kkcd[0]['shift']],[kkcd[0]['d']],[], '', '' )); 
+			characters.push(new character([kkcd[0]['shift']],[kkcd[0]['e']],[], '', '' )); 
+			characters.push(new character([kkcd[0]['shift']],[kkcd[0]['f']],[], '', '' )); 
+			characters.push(new character([kkcd[0]['shift']],[kkcd[0]['g']],[], '', '' )); 
+			characters.push(new character([kkcd[0]['shift']],[kkcd[0]['h']],[], '', '' )); 
+			characters.push(new character([kkcd[0]['shift']],[kkcd[0]['i']],[], '', '' )); 
+			characters.push(new character([kkcd[0]['shift']],[kkcd[0]['j']],[], '', '' )); 
+			characters.push(new character([kkcd[0]['shift']],[kkcd[0]['k']],[], '', '' )); 
+			characters.push(new character([kkcd[0]['shift']],[kkcd[0]['l']],[], '', '' )); 
+			characters.push(new character([kkcd[0]['shift']],[kkcd[0]['m']],[], '', '' )); 
+			characters.push(new character([kkcd[0]['shift']],[kkcd[0]['n']],[], '', '' )); 
+			characters.push(new character([kkcd[0]['shift']],[kkcd[0]['o']],[], '', '' )); 
+			characters.push(new character([kkcd[0]['shift']],[kkcd[0]['p']],[], '', '' )); 
+			characters.push(new character([kkcd[0]['shift']],[kkcd[0]['q']],[], '', '' )); 
+			characters.push(new character([kkcd[0]['shift']],[kkcd[0]['r']],[], '', '' )); 
+			characters.push(new character([kkcd[0]['shift']],[kkcd[0]['s']],[], '', '' )); 
+			characters.push(new character([kkcd[0]['shift']],[kkcd[0]['t']],[], '', '' )); 
+			characters.push(new character([kkcd[0]['shift']],[kkcd[0]['u']],[], '', '' )); 
+			characters.push(new character([kkcd[0]['shift']],[kkcd[0]['v']],[], '', '' )); 
+			characters.push(new character([kkcd[0]['shift']],[kkcd[0]['w']],[], '', '' )); 
+			characters.push(new character([kkcd[0]['shift']],[kkcd[0]['x']],[], '', '' )); 
+			characters.push(new character([kkcd[0]['shift']],[kkcd[0]['y']],[], '', '' )); 
+			characters.push(new character([kkcd[0]['shift']],[kkcd[0]['z']],[], '', '' )); 
+
+			characters.push(new character([kkcd[0]['space']],[],[],'','')); // Space only requires the space bar
 
 			for (var characterItem = 0; characterItem<characters.length; characterItem++){
 				characters[characterItem].bigImage = new Image();
 				characters[characterItem].bigImage.src='w'+zeroPadder(characterItem,4)+'.PNG';
-				}
+			}
 
 			var rawDocument = [];
 			var currentCursorSpot = 0;
 			var currentlyPressedKeys=[];
 
+			var arrayOfWords = [];
+			var arrayOfLines = [];
+			var arrayOfPages = [];
 
+			function organizeWords(){
+				arrayOfWords = [[]];
+				for (var documentCharacter=0; documentCharacter<rawDocument.length; documentCharacter++){
+					if (rawDocument[documentCharacter]!=52){
+						arrayOfWords[arrayOfWords.length-1].push(rawDocument[documentCharacter]);
+					}
+					else{
+						arrayOfWords.push([]);
+						arrayOfWords[arrayOfWords.length-1].push(rawDocument[documentCharacter]);
+					}
+				}
+				arrayOfLines = [[]];
+				for (var word = 0; word<arrayOfWords.length; word++){
+					if ((arrayOfLines[arrayOfLines.length-1].length+arrayOfWords[word].length)<(window.innerWidth-(96*2))){
+						arrayOfLines[arrayOfLines.length-1].push(arrayOfWords[word]);
+					}
+					else{
+						arrayOfLines.push([]);
+						arrayOfLines[arrayOfLines.length-1].push(arrayOfWords[word]);
+					}
+				}
+			}
 
 			function draw(){
 				var chadtechCanvas = document.getElementById("prac").getContext("2d");
+				chadtechCanvas.canvas.width = window.innerWidth;
+				chadtechCanvas.canvas.height = window.innerHeight;
 				chadtechCanvas.fillStyle = "rgb(255,255,255)";
 				chadtechCanvas.fillRect(0,0,800,800);
 				var time = new Date();
-				for (var characterItem=0; characterItem<characters.length; characterItem++){
-					//console.log(characters.length);
-					chadtechCanvas.drawImage(characters[characterItem].bigImage,characterItem*12+300,300);
+				//for (var characterItem=0; characterItem<characters.length; characterItem++){
+				//	chadtechCanvas.drawImage(characters[characterItem].bigImage,characterItem*12+300,300);
+				//}
+				for (var line = 0; line<arrayOfLines.length; line++){
+					for (var word = 0; word <arrayOfLines[line].length; word++){
+						for (var characterInstance = 0; characterInstance<arrayOfLines[line][word].length; characterInstance++){
+							//WIP
+						}
+					}
 				}
 			}
 
@@ -229,6 +312,7 @@
 						}
 					}
 				}
+				organizeWords();
 			}
 
 			function keyEventDown(event){
@@ -237,7 +321,6 @@
 				}
 				console.log(currentlyPressedKeys);
 				documentUpdate();
-				console.log('RAW DOCUMENT', rawDocument);
 
 			}
 
