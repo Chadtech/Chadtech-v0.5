@@ -190,26 +190,40 @@
 				for (var characterItem=0;characterItem<characters.length && keepGoingThroughCharacters;characterItem++){
 					for (var aFirstCondition=0;aFirstCondition<characters[characterItem].firstConditions.length;aFirstCondition++){
 						if (currentlyPressedKeys.indexOf(characters[characterItem].firstConditions[aFirstCondition])!= -1){
-							console.log('FIRST CONDITION MET');
-							for (var aPrecludingCondition=0;aPrecludingCondition<characters[characterItem].precludingConditions.length;aPrecludingCondition++){
-								if (currentlyPressedKeys.indexOf(characters[characterItem].precludingConditions[aPrecludingCondition])== -1){
-									console.log('NO PRECLUDING CONDITIONS MET');
-									if (characters[characterItem].secondConditions.length){
-										for (var aSecondCondition=0;aSecondCondition<characters[characterItem].secondConditions.length;aSecondCondition++){
-											if (currentlyPressedKeys.indexOf(character[characterItem].secondConditions[aSecondCondition])!= -1){
-												console.log('MADE IT THROUGH THE CONDITIONS');
-												rawDocument.splice(currentCursorSpot,0,characterItem);
-												currentCursorSpot+=1;
-												keepGoingThroughCharacters=false;
+							if (characters[characterItem].precludingConditions.length){
+								for (var aPrecludingCondition=0;aPrecludingCondition<characters[characterItem].precludingConditions.length;aPrecludingCondition++){
+									if (currentlyPressedKeys.indexOf(characters[characterItem].precludingConditions[aPrecludingCondition])== -1){
+										if (characters[characterItem].secondConditions.length){
+											for (var aSecondCondition=0;aSecondCondition<characters[characterItem].secondConditions.length;aSecondCondition++){
+												if (currentlyPressedKeys.indexOf(characters[characterItem].secondConditions[aSecondCondition])!= -1){
+													rawDocument.splice(currentCursorSpot,0,characterItem);
+													currentCursorSpot+=1;
+													keepGoingThroughCharacters=false;
+												}
 											}
 										}
+										else{
+											rawDocument.splice(currentCursorSpot,0,characterItem);
+											currentCursorSpot+=1;
+											keepGoingThroughCharacters=false;
+										}
 									}
-									else{
-										console.log('MADE IT THROUGH THE CONDITIONS');
-										rawDocument.splice(currentCursorSpot,0,characterItem);
-										currentCursorSpot+=1;
-										keepGoingThroughCharacters=false;
+								}	
+							}
+							else{
+								if (characters[characterItem].secondConditions.length){
+									for (var aSecondCondition=0;aSecondCondition<characters[characterItem].secondConditions.length;aSecondCondition++){
+										if (currentlyPressedKeys.indexOf(characters[characterItem].secondConditions[aSecondCondition])!= -1){
+											rawDocument.splice(currentCursorSpot,0,characterItem);
+											currentCursorSpot+=1;
+											keepGoingThroughCharacters=false;
+										}
 									}
+								}
+								else{
+									rawDocument.splice(currentCursorSpot,0,characterItem);
+									currentCursorSpot+=1;
+									keepGoingThroughCharacters=false;
 								}
 							}
 						}
