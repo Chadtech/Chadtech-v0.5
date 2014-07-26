@@ -63,7 +63,8 @@
 				'u':85,
 				'v':86,
 				'w':87,
-				'y':88,
+				'x':88,
+				'y':89,
 				'z':90,
 
 				'left command':91,
@@ -171,6 +172,7 @@
 			characters.push(new character([kkcd[0]['k']],[],[kkcd[0]['shift']], '', '' ));
 			characters.push(new character([kkcd[0]['l']],[],[kkcd[0]['shift']], '', '' ));
 			characters.push(new character([kkcd[0]['m']],[],[kkcd[0]['shift']], '', '' ));
+			characters.push(new character([kkcd[0]['n']],[],[kkcd[0]['shift']], '', '' ));
 			characters.push(new character([kkcd[0]['o']],[],[kkcd[0]['shift']], '', '' ));
 			characters.push(new character([kkcd[0]['p']],[],[kkcd[0]['shift']], '', '' ));
 			characters.push(new character([kkcd[0]['q']],[],[kkcd[0]['shift']], '', '' ));
@@ -216,6 +218,7 @@
 			for (var characterItem = 0; characterItem<characters.length; characterItem++){
 				characters[characterItem].bigImage = new Image();
 				characters[characterItem].bigImage.src='w'+zeroPadder(characterItem,4)+'.PNG';
+				console.log('THIS IS BIG IMAGE',characters[characterItem].bigImage);
 			}
 
 			var rawDocument = [];
@@ -252,10 +255,8 @@
 				}
 				var differentArrayOfLines=[];
 				for (var line = 0; line < arrayOfLines.length; line++){
-					console.log('NUMBER OF LINES IN ARRAY OF LINES',arrayOfLines.length);
 					differentArrayOfLines.push([]);
 					for (var word = 0; word<arrayOfLines[line].length; word++){
-						console.log('ARRAY OF LINES', arrayOfLines[line],line,arrayOfLines[line][word],'WORD',word,'LENGTH',arrayOfLines[line].length);
 						for (var characterInstance = 0; characterInstance < arrayOfLines[line][word].length; characterInstance++){
 							differentArrayOfLines[differentArrayOfLines.length-1].push(arrayOfLines[line][word][characterInstance]);
 						}
@@ -265,18 +266,15 @@
 			}
 
 			function draw(){
+				//console.log('THIS IS DOCUMENT',rawDocument);
 				var chadtechCanvas = document.getElementById("prac").getContext("2d");
 				chadtechCanvas.canvas.width = window.innerWidth;
 				chadtechCanvas.canvas.height = window.innerHeight;
 				chadtechCanvas.fillStyle = "rgb(255,255,255)";
 				chadtechCanvas.fillRect(0,0,800,800);
 				var time = new Date();
-				//for (var characterItem=0; characterItem<characters.length; characterItem++){
-				//	chadtechCanvas.drawImage(characters[characterItem].bigImage,characterItem*12+300,300);
-				//}
 				for (var line=0; line<arrayOfLines.length; line++){
-					for (var characterInstance=0; characterInstance<arrayOfLines[line]; characterInstance++){
-						console.log('DOIN A DRAW');
+					for (var characterInstance=0; characterInstance<arrayOfLines[line].length; characterInstance++){
 						chadtechCanvas.drawImage(characters[arrayOfLines[line][characterInstance]].bigImage,(characterInstance*12)+92,(16*line)+32)
 					}
 				}
