@@ -266,7 +266,6 @@
 			}
 
 			function draw(){
-				console.log('THIS IS DOCUMENT',rawDocument);
 				var chadtechCanvas = document.getElementById("prac").getContext("2d");
 				chadtechCanvas.canvas.width = window.innerWidth;
 				chadtechCanvas.canvas.height = window.innerHeight;
@@ -316,7 +315,6 @@
 				if (currentlyPressedKeys.indexOf(event.keyCode)== -1){
 					currentlyPressedKeys.push(event.keyCode);
 				}
-				console.log(currentlyPressedKeys);
 				documentUpdate();
 
 			}
@@ -324,7 +322,6 @@
 			function keyEventUp(event){
 				var indexToRemove = currentlyPressedKeys.indexOf(event.keyCode);
 				currentlyPressedKeys.splice(indexToRemove,1);
-				//console.log(currentlyPressedKeys);
 			}
 
 		</script>
