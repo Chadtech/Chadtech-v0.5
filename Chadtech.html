@@ -140,10 +140,10 @@
 			// then a, will invoke two characters ('Aa'), even though the keyboard practitioner intends to invoke only 
 			// capital A.
 
-			function character(firstStimulus,secondStimulus,precludingStimulus,bigImage,lilImage){
-				this.firstStimulus = firstStimulus;
-				this.secondStimulus = secondStimulus;
-				this.precludingStimulus = precludingStimulus;
+			function character(firstConditions,secondConditions,precludingConditions,bigImage,lilImage){
+				this.firstConditions = firstConditions;
+				this.secondConditions = secondConditions;
+				this.precludingConditions = precludingConditions;
 				this.bigImage = bigImage;
 				this.lilImage = lilImage;
 			}
@@ -169,6 +169,7 @@
 				}
 
 			var rawDocument = [];
+			var currentCursorSpot = 0;
 			var currentlyPressedKeys=[];
 
 
@@ -185,10 +186,32 @@
 			}
 
 			function documentUpdate(){
-				for (var key = 0; key<currentlyPressedKeys.length; key++){
-					for (var characterItem = 0; characterItem<characters.length; characterItem++){
-						if (characters[characterItem].firstStimulus.indexOf(key) != -1){
-							// WIP
+				var keepGoingThroughCharacters=true;
+				for (var characterItem=0;characterItem<characters.length && keepGoingThroughCharacters;characterItem++){
+					for (var aFirstCondition=0;aFirstCondition<characters[characterItem].firstConditions.length;aFirstCondition++){
+						if (currentlyPressedKeys.indexOf(characters[characterItem].firstConditions[aFirstCondition])!= -1){
+							console.log('FIRST CONDITION MET');
+							for (var aPrecludingCondition=0;aPrecludingCondition<characters[characterItem].precludingConditions.length;aPrecludingCondition++){
+								if (currentlyPressedKeys.indexOf(characters[characterItem].precludingConditions[aPrecludingCondition])== -1){
+									console.log('NO PRECLUDING CONDITIONS MET');
+									if (characters[characterItem].secondConditions.length){
+										for (var aSecondCondition=0;aSecondCondition<characters[characterItem].secondConditions.length;aSecondCondition++){
+											if (currentlyPressedKeys.indexOf(character[characterItem].secondConditions[aSecondCondition])!= -1){
+												console.log('MADE IT THROUGH THE CONDITIONS');
+												rawDocument.splice(currentCursorSpot,0,characterItem);
+												currentCursorSpot+=1;
+												keepGoingThroughCharacters=false;
+											}
+										}
+									}
+									else{
+										console.log('MADE IT THROUGH THE CONDITIONS');
+										rawDocument.splice(currentCursorSpot,0,characterItem);
+										currentCursorSpot+=1;
+										keepGoingThroughCharacters=false;
+									}
+								}
+							}
 						}
 					}
 				}
@@ -199,13 +222,17 @@
 					currentlyPressedKeys.push(event.keyCode);
 				}
 				console.log(currentlyPressedKeys);
+				documentUpdate();
+				console.log('RAW DOCUMENT', rawDocument);
 
 			}
+
 			function keyEventUp(event){
 				var indexToRemove = currentlyPressedKeys.indexOf(event.keyCode);
 				currentlyPressedKeys.splice(indexToRemove,1);
 				//console.log(currentlyPressedKeys);
 			}
+
 		</script>
 		<style type="text/css">
 			canvas { border: 20px; border-style: solid; border-color: #C0C0C0; }
