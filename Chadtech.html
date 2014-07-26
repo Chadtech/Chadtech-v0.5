@@ -237,31 +237,31 @@
 						arrayOfWords[arrayOfWords.length-1].push(rawDocument[documentCharacter]);
 					}
 				}
-				console.log('Organized Words');
 				arrayOfLines = [[]];
+				var lineLengthInCharacters = 0;
 				for (var word = 0; word<arrayOfWords.length; word++){
-					if ((arrayOfLines[arrayOfLines.length-1].length+arrayOfWords[word].length)<(window.innerWidth-(96*2))){
+					if ((lineLengthInCharacters+arrayOfWords[word].length)<Math.floor((window.innerWidth-(96*2))/16)){
 						arrayOfLines[arrayOfLines.length-1].push(arrayOfWords[word]);
+						lineLengthInCharacters+=arrayOfWords[word].length;
 					}
 					else{
 						arrayOfLines.push([]);
 						arrayOfLines[arrayOfLines.length-1].push(arrayOfWords[word]);
+						lineLengthInCharacters=0;
 					}
 				}
-				console.log('Organized Lines');
 				var differentArrayOfLines=[];
 				for (var line = 0; line < arrayOfLines.length; line++){
+					console.log('NUMBER OF LINES IN ARRAY OF LINES',arrayOfLines.length);
 					differentArrayOfLines.push([]);
-					for (var word = 0; arrayOfLines[line].length; word++){
-						console.log('WORD IN ARRAY OF LINES', arrayOfLines[line], arrayOfLines[line][word]);
+					for (var word = 0; word<arrayOfLines[line].length; word++){
+						console.log('ARRAY OF LINES', arrayOfLines[line],line,arrayOfLines[line][word],'WORD',word,'LENGTH',arrayOfLines[line].length);
 						for (var characterInstance = 0; characterInstance < arrayOfLines[line][word].length; characterInstance++){
 							differentArrayOfLines[differentArrayOfLines.length-1].push(arrayOfLines[line][word][characterInstance]);
 						}
 					}
 				}
-				console.log('DOUBLE CHECK');
 				arrayOfLines = differentArrayOfLines;
-				console.log('Organized Lines into Words');
 			}
 
 			function draw(){
