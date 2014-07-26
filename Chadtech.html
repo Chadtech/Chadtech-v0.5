@@ -127,23 +127,20 @@
 			var kkcd = [keysToKeyCodes,keyCodesToKeys];
 
 			// Each character is invoked by a series of combinations of key strokes.
-			// Chadtech will run through each character type, and check, in this order
-			// if the keystroke event is an element of the first stimuli,
-			// if the keystroke event is not an element of precluding stimuli, if precluding stimuli are mandated (the array is populated)
-			// and if the keystroke is an element of the second stimuli, if second stimuli are mandated (the array is populated)
-			//
-			// If the stimuli conditions exist, the character is added to the document
-			//
-			// These many conditions are necessary. For example, one might be inclined to think
-			// lowercase a can be invoked only by the keystroke 'a'. However it shares this keystroke with
-			// capital A. Both lowercase a, and capital A require a condition of the shift Key, even though
-			// pressing shift is not necessary to invoke lowercase a. If such condition is not required, pressing shift, 
-			// then a, will invoke two characters ('Aa'), even though the keyboard practitioner intends to invoke only 
-			// capital A.
+			// Chadtech will run through each character type, and check, in this order;
+			// (0) if the latest key pressed, was a trigger key for that character.;
+			// (1) if there are necessary conditions, and if so, that they are met.
+			// For example, capital A and lowercase are both triggered by the a key.
+			// But shift is a necessary condition for capital A.;
+			// (2) that there are no precluding conditions met. For example,
+			// shift being currently pressed is a precudling condition
+			// for lower case a.
 
-			function character(necessaryConditions,trigger,precludingConditions,bigImage,lilImage){
-				this.necessaryConditions = necessaryConditions;
-				this.trigger = trigger;
+			// Specifying both.
+
+			function character(permittingConditions,triggers,precludingConditions,bigImage,lilImage){
+				this.permittingConditions = permittingConditions;
+				this.triggers = triggers;
 				this.precludingConditions = precludingConditions;
 				this.bigImage = bigImage;
 				this.lilImage = lilImage;
@@ -282,13 +279,13 @@
 			function documentUpdate(){
 				var keepGoingThroughCharacters=true;
 				for (var characterItem=0; characterItem<characters.length && keepGoingThroughCharacters; characterItem++){
-					for (var aTrigger=0; aTrigger<characters[characterItem].trigger.length; aTrigger++){
-						if (characters[characterItem].trigger[aTrigger]==justPressedKey){
-							var passedANecessaryCondition = !characters[characterItem].necessaryConditions.length;
-							if (!passedANecessaryCondition){
-								for (var aNecessaryCondition=0; aNecessaryCondition<characters[characterItem].necessaryConditions.length; aNecessaryCondition++){
-									if (currentlyPressedKeys.indexOf(characters[characterItem].necessaryConditions[aNecessaryCondition])!= -1){
-										passedANecessaryCondition=true;
+					for (var aTrigger=0; aTrigger<characters[characterItem].triggers.length; aTrigger++){
+						if (characters[characterItem].triggers[aTrigger]==justPressedKey){
+							var passedAPermittingCondition = !characters[characterItem].permittingConditions.length;
+							if (!passedAPermittingCondition){
+								for (var aPermittingCondition=0; aPermittingCondition<characters[characterItem].permittingConditions.length; aPermittingCondition++){
+									if (currentlyPressedKeys.indexOf(characters[characterItem].permittingConditions[aPermittingCondition])!= -1){
+										passedAPermittingCondition=true;
 									}
 								}
 							}
@@ -298,7 +295,7 @@
 									passedPrecludingConditions=false;
 								}
 							}
-							if (passedPrecludingConditions && passedANecessaryCondition){
+							if (passedPrecludingConditions && passedAPermittingCondition){
 								keepGoingThroughCharacters=false
 								rawDocument.splice(currentCursorSpot,0,characterItem);
 								currentCursorSpot+=1;
