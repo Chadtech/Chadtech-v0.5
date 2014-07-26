@@ -237,6 +237,7 @@
 						arrayOfWords[arrayOfWords.length-1].push(rawDocument[documentCharacter]);
 					}
 				}
+				console.log('Organized Words');
 				arrayOfLines = [[]];
 				for (var word = 0; word<arrayOfWords.length; word++){
 					if ((arrayOfLines[arrayOfLines.length-1].length+arrayOfWords[word].length)<(window.innerWidth-(96*2))){
@@ -247,6 +248,20 @@
 						arrayOfLines[arrayOfLines.length-1].push(arrayOfWords[word]);
 					}
 				}
+				console.log('Organized Lines');
+				var differentArrayOfLines=[];
+				for (var line = 0; line < arrayOfLines.length; line++){
+					differentArrayOfLines.push([]);
+					for (var word = 0; arrayOfLines[line].length; word++){
+						console.log('WORD IN ARRAY OF LINES', arrayOfLines[line], arrayOfLines[line][word]);
+						for (var characterInstance = 0; characterInstance < arrayOfLines[line][word].length; characterInstance++){
+							differentArrayOfLines[differentArrayOfLines.length-1].push(arrayOfLines[line][word][characterInstance]);
+						}
+					}
+				}
+				console.log('DOUBLE CHECK');
+				arrayOfLines = differentArrayOfLines;
+				console.log('Organized Lines into Words');
 			}
 
 			function draw(){
@@ -259,11 +274,10 @@
 				//for (var characterItem=0; characterItem<characters.length; characterItem++){
 				//	chadtechCanvas.drawImage(characters[characterItem].bigImage,characterItem*12+300,300);
 				//}
-				for (var line = 0; line<arrayOfLines.length; line++){
-					for (var word = 0; word <arrayOfLines[line].length; word++){
-						for (var characterInstance = 0; characterInstance<arrayOfLines[line][word].length; characterInstance++){
-							//WIP
-						}
+				for (var line=0; line<arrayOfLines.length; line++){
+					for (var characterInstance=0; characterInstance<arrayOfLines[line]; characterInstance++){
+						console.log('DOIN A DRAW');
+						chadtechCanvas.drawImage(characters[arrayOfLines[line][characterInstance]].bigImage,(characterInstance*12)+92,(16*line)+32)
 					}
 				}
 			}
@@ -331,9 +345,6 @@
 			}
 
 		</script>
-		<style type="text/css">
-			canvas { border: 20px; border-style: solid; border-color: #C0C0C0; }
-		</style>
 	</head>
 	<body onkeydown="keyEventDown(event); draw()" onkeyup="keyEventUp(event)">
     	<div style="position: absolute; top:0px; left:0px;">
