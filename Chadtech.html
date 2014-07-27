@@ -113,30 +113,29 @@
 				keyCodesToKeys[keysToKeyCodes[property]] = property;
 			}
 
-			// kkcd is short for 'Key and KeyCode Dictionaries'
-			// I dislike ambiguous variable names, but in this case I will be typing this variable
-			// several hundred times.
-			//
-			// kkcd is an array of two dictionaries. The first returns a number given a string
-			// The second is the same dictionary, but with the input / output objects
-			// switched.
-			//
-			// This is just for my convenience. So I can type 'the key code corresponding to a'
-			// rather than each keycode, where I would be more prone to mistake.
-
-			var kkcd = [keysToKeyCodes,keyCodesToKeys];
+			var keyToKeyCodeDictionaries = [keysToKeyCodes,keyCodesToKeys];
 
 			// Each character is invoked by a series of combinations of key strokes.
-			// Chadtech will run through each character type, and check, in this order;
+			// Chadtech will run through each character type, and check, in this order:
+
 			// (0) if the latest key pressed, was a trigger key for that character.;
-			// (1) if there are necessary conditions, and if so, that they are met.
-			// For example, capital A and lowercase are both triggered by the a key.
-			// But shift is a necessary condition for capital A.;
+
+			// (1) if there are permitting conditions, and if so, that at least one is
+			// met. For example, capital A and lowercase are both triggered by the a key,
+			// but shift is a permitting condition for capital A.;
+
+			// Though I have called them 'permitting conditions', if there are
+			// any of them, it is necessary (not merely permitted) that at least
+			// one is met. I call them 'permitting conditions', because each one
+			// permits the character, but each one is not necessary (but there being
+			// at least one is).
+
 			// (2) that there are no precluding conditions met. For example,
 			// shift being currently pressed is a precudling condition
 			// for lower case a.
 
-			// Specifying both.
+			// Specifying both is necessary. Without precluding conditions for example
+			// pressing shift and then a would add to the documnet 'Aa'
 
 			function character(permittingConditions,triggers,precludingConditions,bigImage,lilImage){
 				this.permittingConditions = permittingConditions;
@@ -146,6 +145,64 @@
 				this.lilImage = lilImage;
 			}
 
+			var characters = [];
+
+			characters.push(new character([],[keyToKeyCodeDictionaries[0]['a']],[keyToKeyCodeDictionaries[0]['shift']], '', '' )); // lowercase a requires a, then nothing, and not shift
+			characters.push(new character([],[keyToKeyCodeDictionaries[0]['b']],[keyToKeyCodeDictionaries[0]['shift']], '', '' ));
+			characters.push(new character([],[keyToKeyCodeDictionaries[0]['c']],[keyToKeyCodeDictionaries[0]['shift']], '', '' ));
+			characters.push(new character([],[keyToKeyCodeDictionaries[0]['d']],[keyToKeyCodeDictionaries[0]['shift']], '', '' ));
+			characters.push(new character([],[keyToKeyCodeDictionaries[0]['e']],[keyToKeyCodeDictionaries[0]['shift']], '', '' ));
+			characters.push(new character([],[keyToKeyCodeDictionaries[0]['f']],[keyToKeyCodeDictionaries[0]['shift']], '', '' ));
+			characters.push(new character([],[keyToKeyCodeDictionaries[0]['g']],[keyToKeyCodeDictionaries[0]['shift']], '', '' ));
+			characters.push(new character([],[keyToKeyCodeDictionaries[0]['h']],[keyToKeyCodeDictionaries[0]['shift']], '', '' ));
+			characters.push(new character([],[keyToKeyCodeDictionaries[0]['i']],[keyToKeyCodeDictionaries[0]['shift']], '', '' ));
+			characters.push(new character([],[keyToKeyCodeDictionaries[0]['j']],[keyToKeyCodeDictionaries[0]['shift']], '', '' ));
+			characters.push(new character([],[keyToKeyCodeDictionaries[0]['k']],[keyToKeyCodeDictionaries[0]['shift']], '', '' ));
+			characters.push(new character([],[keyToKeyCodeDictionaries[0]['l']],[keyToKeyCodeDictionaries[0]['shift']], '', '' ));
+			characters.push(new character([],[keyToKeyCodeDictionaries[0]['m']],[keyToKeyCodeDictionaries[0]['shift']], '', '' ));
+			characters.push(new character([],[keyToKeyCodeDictionaries[0]['n']],[keyToKeyCodeDictionaries[0]['shift']], '', '' ));
+			characters.push(new character([],[keyToKeyCodeDictionaries[0]['o']],[keyToKeyCodeDictionaries[0]['shift']], '', '' ));
+			characters.push(new character([],[keyToKeyCodeDictionaries[0]['p']],[keyToKeyCodeDictionaries[0]['shift']], '', '' ));
+			characters.push(new character([],[keyToKeyCodeDictionaries[0]['q']],[keyToKeyCodeDictionaries[0]['shift']], '', '' ));
+			characters.push(new character([],[keyToKeyCodeDictionaries[0]['r']],[keyToKeyCodeDictionaries[0]['shift']], '', '' ));
+			characters.push(new character([],[keyToKeyCodeDictionaries[0]['s']],[keyToKeyCodeDictionaries[0]['shift']], '', '' ));
+			characters.push(new character([],[keyToKeyCodeDictionaries[0]['t']],[keyToKeyCodeDictionaries[0]['shift']], '', '' ));
+			characters.push(new character([],[keyToKeyCodeDictionaries[0]['u']],[keyToKeyCodeDictionaries[0]['shift']], '', '' ));
+			characters.push(new character([],[keyToKeyCodeDictionaries[0]['v']],[keyToKeyCodeDictionaries[0]['shift']], '', '' ));
+			characters.push(new character([],[keyToKeyCodeDictionaries[0]['w']],[keyToKeyCodeDictionaries[0]['shift']], '', '' ));
+			characters.push(new character([],[keyToKeyCodeDictionaries[0]['x']],[keyToKeyCodeDictionaries[0]['shift']], '', '' ));
+			characters.push(new character([],[keyToKeyCodeDictionaries[0]['y']],[keyToKeyCodeDictionaries[0]['shift']], '', '' ));
+			characters.push(new character([],[keyToKeyCodeDictionaries[0]['']],[keyToKeyCodeDictionaries[0]['shift']], '', '' ));
+
+			characters.push(new character([keyToKeyCodeDictionaries[0]['shift']],[keyToKeyCodeDictionaries[0]['a']],[], '', '' )); // capital A, requires shift, then a, and not nothing (anything)
+			characters.push(new character([keyToKeyCodeDictionaries[0]['shift']],[keyToKeyCodeDictionaries[0]['b']],[], '', '' )); 
+			characters.push(new character([keyToKeyCodeDictionaries[0]['shift']],[keyToKeyCodeDictionaries[0]['c']],[], '', '' )); 
+			characters.push(new character([keyToKeyCodeDictionaries[0]['shift']],[keyToKeyCodeDictionaries[0]['d']],[], '', '' )); 
+			characters.push(new character([keyToKeyCodeDictionaries[0]['shift']],[keyToKeyCodeDictionaries[0]['e']],[], '', '' )); 
+			characters.push(new character([keyToKeyCodeDictionaries[0]['shift']],[keyToKeyCodeDictionaries[0]['f']],[], '', '' )); 
+			characters.push(new character([keyToKeyCodeDictionaries[0]['shift']],[keyToKeyCodeDictionaries[0]['g']],[], '', '' )); 
+			characters.push(new character([keyToKeyCodeDictionaries[0]['shift']],[keyToKeyCodeDictionaries[0]['h']],[], '', '' )); 
+			characters.push(new character([keyToKeyCodeDictionaries[0]['shift']],[keyToKeyCodeDictionaries[0]['i']],[], '', '' )); 
+			characters.push(new character([keyToKeyCodeDictionaries[0]['shift']],[keyToKeyCodeDictionaries[0]['j']],[], '', '' )); 
+			characters.push(new character([keyToKeyCodeDictionaries[0]['shift']],[keyToKeyCodeDictionaries[0]['k']],[], '', '' )); 
+			characters.push(new character([keyToKeyCodeDictionaries[0]['shift']],[keyToKeyCodeDictionaries[0]['l']],[], '', '' )); 
+			characters.push(new character([keyToKeyCodeDictionaries[0]['shift']],[keyToKeyCodeDictionaries[0]['m']],[], '', '' )); 
+			characters.push(new character([keyToKeyCodeDictionaries[0]['shift']],[keyToKeyCodeDictionaries[0]['n']],[], '', '' )); 
+			characters.push(new character([keyToKeyCodeDictionaries[0]['shift']],[keyToKeyCodeDictionaries[0]['o']],[], '', '' )); 
+			characters.push(new character([keyToKeyCodeDictionaries[0]['shift']],[keyToKeyCodeDictionaries[0]['p']],[], '', '' )); 
+			characters.push(new character([keyToKeyCodeDictionaries[0]['shift']],[keyToKeyCodeDictionaries[0]['q']],[], '', '' )); 
+			characters.push(new character([keyToKeyCodeDictionaries[0]['shift']],[keyToKeyCodeDictionaries[0]['r']],[], '', '' )); 
+			characters.push(new character([keyToKeyCodeDictionaries[0]['shift']],[keyToKeyCodeDictionaries[0]['s']],[], '', '' )); 
+			characters.push(new character([keyToKeyCodeDictionaries[0]['shift']],[keyToKeyCodeDictionaries[0]['t']],[], '', '' )); 
+			characters.push(new character([keyToKeyCodeDictionaries[0]['shift']],[keyToKeyCodeDictionaries[0]['u']],[], '', '' )); 
+			characters.push(new character([keyToKeyCodeDictionaries[0]['shift']],[keyToKeyCodeDictionaries[0]['v']],[], '', '' )); 
+			characters.push(new character([keyToKeyCodeDictionaries[0]['shift']],[keyToKeyCodeDictionaries[0]['w']],[], '', '' )); 
+			characters.push(new character([keyToKeyCodeDictionaries[0]['shift']],[keyToKeyCodeDictionaries[0]['x']],[], '', '' )); 
+			characters.push(new character([keyToKeyCodeDictionaries[0]['shift']],[keyToKeyCodeDictionaries[0]['y']],[], '', '' )); 
+			characters.push(new character([keyToKeyCodeDictionaries[0]['shift']],[keyToKeyCodeDictionaries[0]['z']],[], '', '' )); 
+
+			characters.push(new character([],[keyToKeyCodeDictionaries[0]['space']],[],'','')); // Space only requires the space bar
+
 			function zeroPadder(number,zerosToFill){
 				var numberAsString = number+'';
 				while (numberAsString.length<zerosToFill){
@@ -154,68 +211,25 @@
 				return numberAsString;
 			}
 
-			var characters = [];
-
-			characters.push(new character([],[kkcd[0]['a']],[kkcd[0]['shift']], '', '' )); // lowercase a requires a, then nothing, and not shift
-			characters.push(new character([],[kkcd[0]['b']],[kkcd[0]['shift']], '', '' ));
-			characters.push(new character([],[kkcd[0]['c']],[kkcd[0]['shift']], '', '' ));
-			characters.push(new character([],[kkcd[0]['d']],[kkcd[0]['shift']], '', '' ));
-			characters.push(new character([],[kkcd[0]['e']],[kkcd[0]['shift']], '', '' ));
-			characters.push(new character([],[kkcd[0]['f']],[kkcd[0]['shift']], '', '' ));
-			characters.push(new character([],[kkcd[0]['g']],[kkcd[0]['shift']], '', '' ));
-			characters.push(new character([],[kkcd[0]['h']],[kkcd[0]['shift']], '', '' ));
-			characters.push(new character([],[kkcd[0]['i']],[kkcd[0]['shift']], '', '' ));
-			characters.push(new character([],[kkcd[0]['j']],[kkcd[0]['shift']], '', '' ));
-			characters.push(new character([],[kkcd[0]['k']],[kkcd[0]['shift']], '', '' ));
-			characters.push(new character([],[kkcd[0]['l']],[kkcd[0]['shift']], '', '' ));
-			characters.push(new character([],[kkcd[0]['m']],[kkcd[0]['shift']], '', '' ));
-			characters.push(new character([],[kkcd[0]['n']],[kkcd[0]['shift']], '', '' ));
-			characters.push(new character([],[kkcd[0]['o']],[kkcd[0]['shift']], '', '' ));
-			characters.push(new character([],[kkcd[0]['p']],[kkcd[0]['shift']], '', '' ));
-			characters.push(new character([],[kkcd[0]['q']],[kkcd[0]['shift']], '', '' ));
-			characters.push(new character([],[kkcd[0]['r']],[kkcd[0]['shift']], '', '' ));
-			characters.push(new character([],[kkcd[0]['s']],[kkcd[0]['shift']], '', '' ));
-			characters.push(new character([],[kkcd[0]['t']],[kkcd[0]['shift']], '', '' ));
-			characters.push(new character([],[kkcd[0]['u']],[kkcd[0]['shift']], '', '' ));
-			characters.push(new character([],[kkcd[0]['v']],[kkcd[0]['shift']], '', '' ));
-			characters.push(new character([],[kkcd[0]['w']],[kkcd[0]['shift']], '', '' ));
-			characters.push(new character([],[kkcd[0]['x']],[kkcd[0]['shift']], '', '' ));
-			characters.push(new character([],[kkcd[0]['y']],[kkcd[0]['shift']], '', '' ));
-			characters.push(new character([],[kkcd[0]['']],[kkcd[0]['shift']], '', '' ));
-
-			characters.push(new character([kkcd[0]['shift']],[kkcd[0]['a']],[], '', '' )); // capital A, requires shift, then a, and not nothing (anything)
-			characters.push(new character([kkcd[0]['shift']],[kkcd[0]['b']],[], '', '' )); 
-			characters.push(new character([kkcd[0]['shift']],[kkcd[0]['c']],[], '', '' )); 
-			characters.push(new character([kkcd[0]['shift']],[kkcd[0]['d']],[], '', '' )); 
-			characters.push(new character([kkcd[0]['shift']],[kkcd[0]['e']],[], '', '' )); 
-			characters.push(new character([kkcd[0]['shift']],[kkcd[0]['f']],[], '', '' )); 
-			characters.push(new character([kkcd[0]['shift']],[kkcd[0]['g']],[], '', '' )); 
-			characters.push(new character([kkcd[0]['shift']],[kkcd[0]['h']],[], '', '' )); 
-			characters.push(new character([kkcd[0]['shift']],[kkcd[0]['i']],[], '', '' )); 
-			characters.push(new character([kkcd[0]['shift']],[kkcd[0]['j']],[], '', '' )); 
-			characters.push(new character([kkcd[0]['shift']],[kkcd[0]['k']],[], '', '' )); 
-			characters.push(new character([kkcd[0]['shift']],[kkcd[0]['l']],[], '', '' )); 
-			characters.push(new character([kkcd[0]['shift']],[kkcd[0]['m']],[], '', '' )); 
-			characters.push(new character([kkcd[0]['shift']],[kkcd[0]['n']],[], '', '' )); 
-			characters.push(new character([kkcd[0]['shift']],[kkcd[0]['o']],[], '', '' )); 
-			characters.push(new character([kkcd[0]['shift']],[kkcd[0]['p']],[], '', '' )); 
-			characters.push(new character([kkcd[0]['shift']],[kkcd[0]['q']],[], '', '' )); 
-			characters.push(new character([kkcd[0]['shift']],[kkcd[0]['r']],[], '', '' )); 
-			characters.push(new character([kkcd[0]['shift']],[kkcd[0]['s']],[], '', '' )); 
-			characters.push(new character([kkcd[0]['shift']],[kkcd[0]['t']],[], '', '' )); 
-			characters.push(new character([kkcd[0]['shift']],[kkcd[0]['u']],[], '', '' )); 
-			characters.push(new character([kkcd[0]['shift']],[kkcd[0]['v']],[], '', '' )); 
-			characters.push(new character([kkcd[0]['shift']],[kkcd[0]['w']],[], '', '' )); 
-			characters.push(new character([kkcd[0]['shift']],[kkcd[0]['x']],[], '', '' )); 
-			characters.push(new character([kkcd[0]['shift']],[kkcd[0]['y']],[], '', '' )); 
-			characters.push(new character([kkcd[0]['shift']],[kkcd[0]['z']],[], '', '' )); 
-
-			characters.push(new character([],[kkcd[0]['space']],[],'','')); // Space only requires the space bar
-
 			for (var characterItem = 0; characterItem<characters.length; characterItem++){
 				characters[characterItem].bigImage = new Image();
 				characters[characterItem].bigImage.src='w'+zeroPadder(characterItem,4)+'.PNG';
 			}
+
+			var commands = [];
+
+			function command(triggers,permittingConditions,execution){
+				this.triggers=triggers;
+				this.permittingConditions=permittingConditions;
+				this.execution=execution;
+			}
+
+			commands.push(new command([keyToKeyCodeDictionaries[0]['backspace']],[],function backspace(){
+				console.log('PRE',rawDocument);
+				rawDocument.splice(currentCursorSpot-1);
+				currentCursorSpot-=1;
+				console.log('POST',rawDocument);
+			}));
 
 			var rawDocument = [];
 			var justPressedKey;
@@ -299,6 +313,29 @@
 								keepGoingThroughCharacters=false
 								rawDocument.splice(currentCursorSpot,0,characterItem);
 								currentCursorSpot+=1;
+							}
+						}
+					}
+				}
+				for (var commandItem=0; commandItem<commands.length; commandItem++){
+					console.log('A');
+					for (var aTrigger=0; aTrigger<commands[commandItem].triggers.length; aTrigger++){
+						console.log('B');
+						if(commands[commandItem].triggers[aTrigger]==justPressedKey){
+							console.log('C');
+							var passedAPermittingCondition = !commands[commandItem].permittingConditions.length;
+							if (!passedAPermittingCondition){
+								console.log('D');
+								for (var aPermittingCondition=0; aPermittingCondition<commands[commandItem].permittingConditions.length; aPermittingCondition++){
+									if (currentlyPressedKeys.indexOf(commands[commandItem].permittingConditions[aPermittingCondition])!= -1){
+										passedAPermittingCondition=true;
+									}
+								}
+							}
+							if(passedAPermittingCondition){
+								console.log('E');
+								commands[commandItem].execution();
+								//whatToExecute();
 							}
 						}
 					}
