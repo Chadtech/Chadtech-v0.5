@@ -225,10 +225,8 @@
 			}
 
 			commands.push(new command([keyToKeyCodeDictionaries[0]['backspace']],[],function backspace(){
-				console.log('PRE',rawDocument);
 				rawDocument.splice(currentCursorSpot-1);
 				currentCursorSpot-=1;
-				console.log('POST',rawDocument);
 			}));
 
 			var rawDocument = [];
@@ -318,14 +316,10 @@
 					}
 				}
 				for (var commandItem=0; commandItem<commands.length; commandItem++){
-					console.log('A');
 					for (var aTrigger=0; aTrigger<commands[commandItem].triggers.length; aTrigger++){
-						console.log('B');
 						if(commands[commandItem].triggers[aTrigger]==justPressedKey){
-							console.log('C');
 							var passedAPermittingCondition = !commands[commandItem].permittingConditions.length;
 							if (!passedAPermittingCondition){
-								console.log('D');
 								for (var aPermittingCondition=0; aPermittingCondition<commands[commandItem].permittingConditions.length; aPermittingCondition++){
 									if (currentlyPressedKeys.indexOf(commands[commandItem].permittingConditions[aPermittingCondition])!= -1){
 										passedAPermittingCondition=true;
@@ -333,9 +327,7 @@
 								}
 							}
 							if(passedAPermittingCondition){
-								console.log('E');
 								commands[commandItem].execution();
-								//whatToExecute();
 							}
 						}
 					}
