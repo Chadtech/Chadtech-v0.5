@@ -115,6 +115,9 @@
 
 			var keyToKeyCodeDictionaries = [keysToKeyCodes,keyCodesToKeys];
 
+			var cursorImage = new Image();
+			cursorImage.src = 'c0000.PNG';
+
 			// Each character is invoked by a series of combinations of key strokes.
 			// Chadtech will run through each character type, and check, in this order:
 
@@ -228,6 +231,12 @@
 				rawDocument.splice(currentCursorSpot-1);
 				currentCursorSpot-=1;
 			}));
+			commands.push(new command([keyToKeyCodeDictionaries[0]['left']],[],function leftOver(){
+				currentCursorSpot-=1;
+			}));
+			commands.push(new command([keyToKeyCodeDictionaries[0]['right']],[],function rightOver(){
+				currentCursorSpot+=1;
+			}));
 
 			var rawDocument = [];
 			var justPressedKey;
@@ -238,21 +247,32 @@
 			var arrayOfLines = [];
 			var arrayOfPages = [];
 
+			var cursorsLine = 0;
+			var cursorInLine = 0;
+
 			function organizeWords(){
 				arrayOfWords = [[]];
 				for (var documentCharacter=0; documentCharacter<rawDocument.length; documentCharacter++){
+					if (documentCharacter==currentCursorSpot){
+						var wordCursorIsIn = arrayOfWords.length;
+						var characterInWord = arrayOfWords[arrayOfWords.length-1].length;
+					}
 					if (rawDocument[documentCharacter]!=52){
 						arrayOfWords[arrayOfWords.length-1].push(rawDocument[documentCharacter]);
 					}
 					else{
-						arrayOfWords.push([]);
 						arrayOfWords[arrayOfWords.length-1].push(rawDocument[documentCharacter]);
+						arrayOfWords.push([]);
 					}
 				}
 				arrayOfLines = [[]];
 				var lineLengthInCharacters = 0;
 				for (var word = 0; word<arrayOfWords.length; word++){
-					if ((lineLengthInCharacters+arrayOfWords[word].length)<Math.floor((window.innerWidth-(96*2))/16)){
+					if (wordCursorIsIn==word){
+						cursorsLine = arrayOfLines.length;
+						cursorInLine = lineLengthInCharacters+characterInWord;
+					}
+					if ((lineLengthInCharacters+arrayOfWords[word].length)<(Math.floor((window.innerWidth-(96*2))/12))){
 						arrayOfLines[arrayOfLines.length-1].push(arrayOfWords[word]);
 						lineLengthInCharacters+=arrayOfWords[word].length;
 					}
@@ -275,17 +295,19 @@
 			}
 
 			function draw(){
-				var chadtechCanvas = document.getElementById("prac").getContext("2d");
-				chadtechCanvas.canvas.width = window.innerWidth;
-				chadtechCanvas.canvas.height = window.innerHeight;
+				var chadtechCanvas = document.getElementById("Chadtech-v0.5").getContext("2d");
 				chadtechCanvas.fillStyle = "rgb(255,255,255)";
 				chadtechCanvas.fillRect(0,0,800,800);
+				chadtechCanvas.canvas.width = window.innerWidth;
+				chadtechCanvas.canvas.height = window.innerHeight;
+				organizeWords();
 				var time = new Date();
 				for (var line=0; line<arrayOfLines.length; line++){
 					for (var characterInstance=0; characterInstance<arrayOfLines[line].length; characterInstance++){
 						chadtechCanvas.drawImage(characters[arrayOfLines[line][characterInstance]].bigImage,(characterInstance*12)+92,(16*line)+32)
 					}
 				}
+				chadtechCanvas.drawImage(cursorImage,(cursorInLine*12)+96,(cursorsLine*16)+32);
 			}
 
 			function documentUpdate(){
@@ -337,12 +359,10 @@
 
 			function keyEventDown(event){
 				justPressedKey=event.keyCode;
-
 				if (currentlyPressedKeys.indexOf(event.keyCode)== -1){
 					currentlyPressedKeys.push(event.keyCode);
 				}
 				documentUpdate();
-
 			}
 
 			function keyEventUp(event){
@@ -352,9 +372,9 @@
 
 		</script>
 	</head>
-	<body onkeydown="keyEventDown(event); draw()" onkeyup="keyEventUp(event)">
+	<body onkeydown="keyEventDown(event); draw()" onresize="draw()" onkeyup="keyEventUp(event)">
     	<div style="position: absolute; top:0px; left:0px;">
-		<canvas id="prac" width="800" height="800"></canvas>
+		<canvas id="Chadtech-v0.5" width="800" height="800"></canvas>
 		</div>
 	</body>
 </html>
