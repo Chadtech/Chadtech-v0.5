@@ -205,6 +205,7 @@
 			characters.push(new character([keyToKeyCodeDictionaries[0]['shift']],[keyToKeyCodeDictionaries[0]['z']],[], '', '' )); 
 
 			characters.push(new character([],[keyToKeyCodeDictionaries[0]['space']],[],'','')); // Space only requires the space bar
+			characters.push(new character([],[keyToKeyCodeDictionaries[0]['enter']],[],'','')); // Enter only requires the enter key
 
 			function zeroPadder(number,zerosToFill){
 				var numberAsString = number+'';
@@ -253,34 +254,46 @@
 			function organizeWords(){
 				arrayOfWords = [[]];
 				for (var documentCharacter=0; documentCharacter<rawDocument.length; documentCharacter++){
-					if (documentCharacter==currentCursorSpot){
-						var wordCursorIsIn = arrayOfWords.length;
-						var characterInWord = arrayOfWords[arrayOfWords.length-1].length;
-					}
-					if (rawDocument[documentCharacter]!=52){
-						arrayOfWords[arrayOfWords.length-1].push(rawDocument[documentCharacter]);
-					}
-					else{
-						arrayOfWords[arrayOfWords.length-1].push(rawDocument[documentCharacter]);
-						arrayOfWords.push([]);
+					//if (documentCharacter==currentCursorSpot){
+					//	var wordCursorIsIn = arrayOfWords.length;
+					//	var characterInWord = arrayOfWords[arrayOfWords.length-1].length;
+					//}
+					switch(rawDocument[documentCharacter]){
+						case 52:
+							arrayOfWords[arrayOfWords.length-1].push(rawDocument[documentCharacter]);
+							arrayOfWords.push([]);
+							break;
+						case 53:
+							arrayOfWords.push([53]);
+							arrayOfWords.push([]);
+							break;
+						default:
+							arrayOfWords[arrayOfWords.length-1].push(rawDocument[documentCharacter]);
 					}
 				}
 				arrayOfLines = [[]];
 				var lineLengthInCharacters = 0;
 				for (var word = 0; word<arrayOfWords.length; word++){
-					if (wordCursorIsIn==word){
-						cursorsLine = arrayOfLines.length;
-						cursorInLine = lineLengthInCharacters+characterInWord;
-					}
-					if ((lineLengthInCharacters+arrayOfWords[word].length)<(Math.floor((window.innerWidth-(96*2))/12))){
-						arrayOfLines[arrayOfLines.length-1].push(arrayOfWords[word]);
-						lineLengthInCharacters+=arrayOfWords[word].length;
-					}
-					else{
+				//	if (wordCursorIsIn==word){
+				//		cursorsLine = arrayOfLines.length;
+				//		cursorInLine = lineLengthInCharacters+characterInWord;
+				//	}
+					if (arrayOfWords[word][0]==53){
 						arrayOfLines.push([]);
-						arrayOfLines[arrayOfLines.length-1].push(arrayOfWords[word]);
 						lineLengthInCharacters=0;
 					}
+					else{
+						if ((lineLengthInCharacters+arrayOfWords[word].length)<(Math.floor((window.innerWidth-(96*2))/12))){
+							arrayOfLines[arrayOfLines.length-1].push(arrayOfWords[word]);
+							lineLengthInCharacters+=arrayOfWords[word].length;
+						}
+						else{
+							arrayOfLines.push([]);
+							arrayOfLines[arrayOfLines.length-1].push(arrayOfWords[word]);
+							lineLengthInCharacters=0;
+						}
+					}
+					//console.log('POST',arrayOfLines.length);
 				}
 				var differentArrayOfLines=[];
 				for (var line = 0; line < arrayOfLines.length; line++){
@@ -296,8 +309,6 @@
 
 			function draw(){
 				var chadtechCanvas = document.getElementById("Chadtech-v0.5").getContext("2d");
-				chadtechCanvas.fillStyle = "rgb(255,255,255)";
-				chadtechCanvas.fillRect(0,0,800,800);
 				chadtechCanvas.canvas.width = window.innerWidth;
 				chadtechCanvas.canvas.height = window.innerHeight;
 				organizeWords();
