@@ -226,20 +226,25 @@
 
 			var commands = [];
 
-			function command(triggers,permittingConditions,execution){
+			function command(permittingConditions,triggers,precludingConditions,execution){
 				this.triggers=triggers;
 				this.permittingConditions=permittingConditions;
 				this.execution=execution;
 			}
 
-			commands.push(new command([keyToKeyCodeDictionaries[0]['backspace']],[],function backspace(){
+			commands.push(new command([],[keyToKeyCodeDictionaries[0]['backspace']],[keyToKeyCodeDictionaries[0]['ctrl'],keyToKeyCodeDictionaries[0]['shift']],function backspace(){
 				rawDocument.splice(currentCursorSpot-1,1);
 				currentCursorSpot-=1;
 			}));
-			commands.push(new command([keyToKeyCodeDictionaries[0]['left']],[],function leftOver(){
+			// Naming a function 'delete' returns an error. So I named it 'reverse backspace' instead. This command is fn + backspace on mac
+			// and delete on PC
+			commands.push(new command([],[keyToKeyCodeDictionaries[0]['delete']],[],function reverseBackspace(){
+				rawDocument.splice(currentCursorSpot,1);
+			}));
+			commands.push(new command([],[keyToKeyCodeDictionaries[0]['left']],[],function leftOver(){
 				currentCursorSpot-=1;
 			}));
-			commands.push(new command([keyToKeyCodeDictionaries[0]['right']],[],function rightOver(){
+			commands.push(new command([],[keyToKeyCodeDictionaries[0]['right']],[],function rightOver(){
 				currentCursorSpot+=1;
 			}));
 
