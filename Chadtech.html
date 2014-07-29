@@ -227,12 +227,13 @@
 			var commands = [];
 
 			function command(permittingConditions,triggers,precludingConditions,execution){
-				this.triggers=triggers;
 				this.permittingConditions=permittingConditions;
+				this.triggers=triggers;
+				this.precludingConditions=precludingConditions;
 				this.execution=execution;
 			}
 
-			commands.push(new command([],[keyToKeyCodeDictionaries[0]['backspace']],[keyToKeyCodeDictionaries[0]['ctrl'],keyToKeyCodeDictionaries[0]['shift']],function backspace(){
+			commands.push(new command([],[keyToKeyCodeDictionaries[0]['backspace']],[keyToKeyCodeDictionaries[0]['ctrl'],keyToKeyCodeDictionaries[0]['shift']],function backspace(){ 
 				rawDocument.splice(currentCursorSpot-1,1);
 				currentCursorSpot-=1;
 			}));
@@ -247,6 +248,7 @@
 			commands.push(new command([],[keyToKeyCodeDictionaries[0]['right']],[],function rightOver(){
 				currentCursorSpot+=1;
 			}));
+			//commands.push(new command([]))
 
 			var rawDocument = [];
 			var justPressedKey;
@@ -367,7 +369,13 @@
 									}
 								}
 							}
-							if(passedAPermittingCondition){
+							var passedPrecludingConditions = true;
+							for (var aPrecludingCondition=0; aPrecludingCondition<commands[commandItem].precludingConditions.length; aPrecludingCondition++){
+								if(currentlyPressedKeys.indexOf(commands[commandItem].precludingConditions[aPrecludingCondition]) != -1){
+									passedPrecludingConditions=false;
+								}
+							}
+							if(passedAPermittingCondition && passedPrecludingConditions){
 								commands[commandItem].execution();
 							}
 						}
