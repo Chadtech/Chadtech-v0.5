@@ -304,10 +304,6 @@
 				arrayOfLines = [[]];
 				var lineLengthInCharacters = 0;
 				for (var word = 0; word<arrayOfWords.length; word++){
-					if (wordCursorIsIn==word){
-						cursorsLine = arrayOfLines.length-1;
-						cursorInLine = lineLengthInCharacters+characterInWord+1;
-					}
 					if (arrayOfWords[word][0]==53){
 						arrayOfLines.push([]);
 						lineLengthInCharacters=0;
@@ -320,8 +316,12 @@
 						else{
 							arrayOfLines.push([]);
 							arrayOfLines[arrayOfLines.length-1].push(arrayOfWords[word]);
-							lineLengthInCharacters=0;
+							lineLengthInCharacters=arrayOfWords[word].length;
 						}
+					}
+					if (wordCursorIsIn==word){
+						cursorsLine = arrayOfLines.length-1;
+						cursorInLine = lineLengthInCharacters;
 					}
 				}
 				var differentArrayOfLines=[];
