@@ -175,7 +175,7 @@
 			characters.push(new character([],[keyToKeyCodeDictionaries[0]['w']],[keyToKeyCodeDictionaries[0]['shift']], '', '' ));
 			characters.push(new character([],[keyToKeyCodeDictionaries[0]['x']],[keyToKeyCodeDictionaries[0]['shift']], '', '' ));
 			characters.push(new character([],[keyToKeyCodeDictionaries[0]['y']],[keyToKeyCodeDictionaries[0]['shift']], '', '' ));
-			characters.push(new character([],[keyToKeyCodeDictionaries[0]['']],[keyToKeyCodeDictionaries[0]['shift']], '', '' ));
+			characters.push(new character([],[keyToKeyCodeDictionaries[0]['z']],[keyToKeyCodeDictionaries[0]['shift']], '', '' ));
 
 			characters.push(new character([keyToKeyCodeDictionaries[0]['shift']],[keyToKeyCodeDictionaries[0]['a']],[], '', '' )); // capital A, requires shift, then a, and not nothing (anything)
 			characters.push(new character([keyToKeyCodeDictionaries[0]['shift']],[keyToKeyCodeDictionaries[0]['b']],[], '', '' )); 
@@ -254,30 +254,31 @@
 			function organizeWords(){
 				arrayOfWords = [[]];
 				for (var documentCharacter=0; documentCharacter<rawDocument.length; documentCharacter++){
-					//if (documentCharacter==currentCursorSpot){
-					//	var wordCursorIsIn = arrayOfWords.length;
-					//	var characterInWord = arrayOfWords[arrayOfWords.length-1].length;
-					//}
 					switch(rawDocument[documentCharacter]){
 						case 52:
 							arrayOfWords[arrayOfWords.length-1].push(rawDocument[documentCharacter]);
 							arrayOfWords.push([]);
 							break;
 						case 53:
+							//wordCursorIsIn+=1;
 							arrayOfWords.push([53]);
 							arrayOfWords.push([]);
 							break;
 						default:
 							arrayOfWords[arrayOfWords.length-1].push(rawDocument[documentCharacter]);
 					}
+					if (documentCharacter==(currentCursorSpot-1)){
+						var wordCursorIsIn = arrayOfWords.length-1;
+						var characterInWord = arrayOfWords[arrayOfWords.length-1].length-1;
+					}
 				}
 				arrayOfLines = [[]];
 				var lineLengthInCharacters = 0;
 				for (var word = 0; word<arrayOfWords.length; word++){
-				//	if (wordCursorIsIn==word){
-				//		cursorsLine = arrayOfLines.length;
-				//		cursorInLine = lineLengthInCharacters+characterInWord;
-				//	}
+					if (wordCursorIsIn==word){
+						cursorsLine = arrayOfLines.length-1;
+						cursorInLine = lineLengthInCharacters+characterInWord+1;
+					}
 					if (arrayOfWords[word][0]==53){
 						arrayOfLines.push([]);
 						lineLengthInCharacters=0;
@@ -293,7 +294,6 @@
 							lineLengthInCharacters=0;
 						}
 					}
-					//console.log('POST',arrayOfLines.length);
 				}
 				var differentArrayOfLines=[];
 				for (var line = 0; line < arrayOfLines.length; line++){
@@ -315,7 +315,7 @@
 				var time = new Date();
 				for (var line=0; line<arrayOfLines.length; line++){
 					for (var characterInstance=0; characterInstance<arrayOfLines[line].length; characterInstance++){
-						chadtechCanvas.drawImage(characters[arrayOfLines[line][characterInstance]].bigImage,(characterInstance*12)+92,(16*line)+32)
+						chadtechCanvas.drawImage(characters[arrayOfLines[line][characterInstance]].bigImage,(characterInstance*12)+96,(16*line)+32)
 					}
 				}
 				chadtechCanvas.drawImage(cursorImage,(cursorInLine*12)+96,(cursorsLine*16)+32);
@@ -385,7 +385,7 @@
 	</head>
 	<body onkeydown="keyEventDown(event); draw()" onresize="draw()" onkeyup="keyEventUp(event)">
     	<div style="position: absolute; top:0px; left:0px;">
-		<canvas id="Chadtech-v0.5" width="800" height="800"></canvas>
+		<canvas id="Chadtech-v0.5" width="800" height="800" style=" background-color:#000000;"></canvas>
 		</div>
 	</body>
 </html>
