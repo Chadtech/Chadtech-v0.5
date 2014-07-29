@@ -150,7 +150,8 @@
 
 			var characters = [];
 
-			characters.push(new character([],[keyToKeyCodeDictionaries[0]['a']],[keyToKeyCodeDictionaries[0]['shift']], '', '' )); // lowercase a requires a, then nothing, and not shift
+			// lowercase a requires a, then nothing, and not shift
+			characters.push(new character([],[keyToKeyCodeDictionaries[0]['a']],[keyToKeyCodeDictionaries[0]['shift']], '', '' ));
 			characters.push(new character([],[keyToKeyCodeDictionaries[0]['b']],[keyToKeyCodeDictionaries[0]['shift']], '', '' ));
 			characters.push(new character([],[keyToKeyCodeDictionaries[0]['c']],[keyToKeyCodeDictionaries[0]['shift']], '', '' ));
 			characters.push(new character([],[keyToKeyCodeDictionaries[0]['d']],[keyToKeyCodeDictionaries[0]['shift']], '', '' ));
@@ -177,7 +178,8 @@
 			characters.push(new character([],[keyToKeyCodeDictionaries[0]['y']],[keyToKeyCodeDictionaries[0]['shift']], '', '' ));
 			characters.push(new character([],[keyToKeyCodeDictionaries[0]['z']],[keyToKeyCodeDictionaries[0]['shift']], '', '' ));
 
-			characters.push(new character([keyToKeyCodeDictionaries[0]['shift']],[keyToKeyCodeDictionaries[0]['a']],[], '', '' )); // capital A, requires shift, then a, and not nothing (anything)
+			// capital A, requires shift, then a, and not nothing (anything)
+			characters.push(new character([keyToKeyCodeDictionaries[0]['shift']],[keyToKeyCodeDictionaries[0]['a']],[], '', '' )); 
 			characters.push(new character([keyToKeyCodeDictionaries[0]['shift']],[keyToKeyCodeDictionaries[0]['b']],[], '', '' )); 
 			characters.push(new character([keyToKeyCodeDictionaries[0]['shift']],[keyToKeyCodeDictionaries[0]['c']],[], '', '' )); 
 			characters.push(new character([keyToKeyCodeDictionaries[0]['shift']],[keyToKeyCodeDictionaries[0]['d']],[], '', '' )); 
@@ -207,6 +209,8 @@
 			characters.push(new character([],[keyToKeyCodeDictionaries[0]['space']],[],'','')); // Space only requires the space bar
 			characters.push(new character([],[keyToKeyCodeDictionaries[0]['enter']],[],'','')); // Enter only requires the enter key
 
+			characters.push(new character([],[keyToKeyCodeDictionaries[0]['period']],[keyToKeyCodeDictionaries[0]['shift']], '', '' )); 
+
 			function zeroPadder(number,zerosToFill){
 				var numberAsString = number+'';
 				while (numberAsString.length<zerosToFill){
@@ -229,7 +233,7 @@
 			}
 
 			commands.push(new command([keyToKeyCodeDictionaries[0]['backspace']],[],function backspace(){
-				rawDocument.splice(currentCursorSpot-1);
+				rawDocument.splice(currentCursorSpot-1,1);
 				currentCursorSpot-=1;
 			}));
 			commands.push(new command([keyToKeyCodeDictionaries[0]['left']],[],function leftOver(){
@@ -260,7 +264,6 @@
 							arrayOfWords.push([]);
 							break;
 						case 53:
-							//wordCursorIsIn+=1;
 							arrayOfWords.push([53]);
 							arrayOfWords.push([]);
 							break;
