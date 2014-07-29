@@ -322,6 +322,7 @@
 					if (wordCursorIsIn==word){
 						cursorsLine = arrayOfLines.length-1;
 						cursorInLine = lineLengthInCharacters;
+						cursorInLine-=(arrayOfWords[word].length-characterInWord-1);
 					}
 				}
 				var differentArrayOfLines=[];
