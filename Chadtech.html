@@ -255,10 +255,7 @@
 			}));
 			commands.push(new command([],[keyToKeyCodeDictionaries[0]['up']],[],function upOver(){
 				if (cursorsLine==0){
-					while(currentCursorSpot>0){
-						commands[2].execution();
-					}
-					//currentCursorSpot=0;
+					currentCursorSpot=0;
 				}
 				else{
 					for (var time=0; time< arrayOfLines[cursorsLine-1].length; time++){
