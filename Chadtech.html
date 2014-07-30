@@ -398,17 +398,17 @@
 			function draw(){
 				var chadtechCanvas = document.getElementById("Chadtech-v0.5").getContext("2d");
 				chadtechCanvas.canvas.width = window.innerWidth;
-				chadtechCanvas.canvas.height = window.innerHeight;
+				chadtechCanvas.canvas.height = window.innerHeight + 400;
 				organizeWords();
-				var time = new Date();
 				chadtechCanvas.fillStyle="#000000";
-				chadtechCanvas.fillRect(0,0,window.innerWidth,window.innerHeight);
+				chadtechCanvas.fillRect(0,0,window.innerWidth,window.innerHeight + 400);
 				for (var line=0; line<arrayOfLines.length; line++){
 					for (var characterInstance=0; characterInstance<arrayOfLines[line].length; characterInstance++){
 						chadtechCanvas.drawImage(characters[arrayOfLines[line][characterInstance]].bigImage,(characterInstance*12)+96,(16*line)+32)
 					}
 				}
 				chadtechCanvas.drawImage(cursorImage,(cursorInLine*12)+96,(cursorsLine*16)+32);
+				writeData();
 			}
 
 			function documentUpdate(){
@@ -464,6 +464,39 @@
 					}
 				}
 				organizeWords();
+			}
+
+			function writeData(){
+				var chadtechCanvas = document.getElementById("Chadtech-v0.5").getContext("2d");
+				documentAsData=[];
+				for (var documentItem=0;documentItem<rawDocument.length;documentItem++){
+					ze=Math.floor(rawDocument[documentItem]/256);
+					on=rawDocument[documentItem]%256;
+					documentAsData.push(ze);
+					documentAsData.push(on);
+				}
+				var bunchaPixels=[];
+				var singlePixel=[];
+				var singlePixelMeter=0;
+				for (var datum=0;datum<documentAsData.length;datum++){
+					singlePixel.push(documentAsData[datum]);
+					if(singlePixel.length==3){
+						bunchaPixels.push(singlePixel);
+						singlePixel=[];
+					}
+
+				}
+				for (var pixel=0;pixel<bunchaPixels.length;pixel++){
+					var singleCanvasSpot=chadtechCanvas.createImageData(1,1);
+					var colorValues=singleCanvasSpot.data;
+					console.log(bunchaPixels[pixel]);
+
+					colorValues[0]=bunchaPixels[pixel][0];
+					colorValues[1]=bunchaPixels[pixel][1];
+					colorValues[2]=bunchaPixels[pixel][2];
+					colorValues[3]=255;
+					chadtechCanvas.putImageData(singleCanvasSpot,Math.floor(pixel/window.innerHeight),pixel%window.innerHeight);
+				}
 			}
 
 			function keyEventDown(event){
