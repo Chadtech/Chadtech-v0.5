@@ -169,7 +169,7 @@
 			characters.push(new character([],[keyToKeyCodeDictionaries[0]['p']],[keyToKeyCodeDictionaries[0]['shift']], '', '' ));
 			characters.push(new character([],[keyToKeyCodeDictionaries[0]['q']],[keyToKeyCodeDictionaries[0]['shift']], '', '' ));
 			characters.push(new character([],[keyToKeyCodeDictionaries[0]['r']],[keyToKeyCodeDictionaries[0]['shift']], '', '' ));
-			characters.push(new character([],[keyToKeyCodeDictionaries[0]['s']],[keyToKeyCodeDictionaries[0]['shift']], '', '' ));
+			characters.push(new character([],[keyToKeyCodeDictionaries[0]['s']],[keyToKeyCodeDictionaries[0]['left command'],keyToKeyCodeDictionaries[0]['right command'],keyToKeyCodeDictionaries[0]['shift']], '', '' ));
 			characters.push(new character([],[keyToKeyCodeDictionaries[0]['t']],[keyToKeyCodeDictionaries[0]['shift']], '', '' ));
 			characters.push(new character([],[keyToKeyCodeDictionaries[0]['u']],[keyToKeyCodeDictionaries[0]['shift']], '', '' ));
 			characters.push(new character([],[keyToKeyCodeDictionaries[0]['v']],[keyToKeyCodeDictionaries[0]['shift']], '', '' ));
@@ -257,21 +257,25 @@
 				rawDocument.splice(currentCursorSpot-1,1);
 				currentCursorSpot-=1;
 			}));
+
 			// Naming a function 'delete' returns an error. So I named it 'reverse backspace' instead. This command is fn + backspace on mac
 			// and delete on PC
 			commands.push(new command([],[keyToKeyCodeDictionaries[0]['delete']],[],function reverseBackspace(){
 				rawDocument.splice(currentCursorSpot,1);
 			}));
+
 			commands.push(new command([],[keyToKeyCodeDictionaries[0]['left']],[keyToKeyCodeDictionaries[0]['ctrl']],function leftOver(){
 				if (currentCursorSpot>0){
 					currentCursorSpot-=1;
 				}
 			}));
+
 			commands.push(new command([],[keyToKeyCodeDictionaries[0]['right']],[keyToKeyCodeDictionaries[0]['ctrl']],function rightOver(){
 				if (currentCursorSpot<rawDocument.length){
 					currentCursorSpot+=1;
 				}
 			}));
+
 			commands.push(new command([],[keyToKeyCodeDictionaries[0]['up']],[],function upOver(){
 				if (cursorsLine==0){
 					currentCursorSpot=0;
@@ -282,6 +286,7 @@
 					}
 				}
 			}));
+
 			commands.push(new command([],[keyToKeyCodeDictionaries[0]['down']],[],function downOver(){
 				if ((cursorsLine+1)==arrayOfLines.length){
 					currentCursorSpot=rawDocument.length;
@@ -295,15 +300,28 @@
 					}
 				}
 			}));
+
 			commands.push(new command([keyToKeyCodeDictionaries[0]['ctrl']],[keyToKeyCodeDictionaries[0]['left']],[],function megaLeftOver(){
 				for (var time = 0; time < megaMagnitude; time++){
 					commands[2].execution();
 				}
 			}));
+
 			commands.push(new command([keyToKeyCodeDictionaries[0]['ctrl']],[keyToKeyCodeDictionaries[0]['left']],[],function megaRightOver(){
 				for (var time = 0; time < megaMagnitude; time++){
 					commands[3].execution();
 				}
+			}));
+
+			commands.push(new command([keyToKeyCodeDictionaries[0]['left command'],[keyToKeyCodeDictionaries[0]['right command']]],[keyToKeyCodeDictionaries[0]['s']],[],function saveImage(){
+				console.log('DOIN A SAVE');
+				var chadtechCanvas = document.getElementById("Chadtech-v0.5");
+				console.log('YES THIS IS CANVAS',chadtechCanvas);
+				var chadtechContext = chadtechCanvas.getContext("2d");
+				console.log('YES THIS IS CONTEXT',chadtechContext);
+				var documentToSave = chadtechCanvas.toDataURL();
+				window.location.href=documentToSave;
+				document.getElementById('chadtechCanvasImage').src = documentToSave;
 			}));
 
 			var rawDocument = [];
@@ -383,6 +401,8 @@
 				chadtechCanvas.canvas.height = window.innerHeight;
 				organizeWords();
 				var time = new Date();
+				chadtechCanvas.fillStyle="#000000";
+				chadtechCanvas.fillRect(0,0,window.innerWidth,window.innerHeight);
 				for (var line=0; line<arrayOfLines.length; line++){
 					for (var characterInstance=0; characterInstance<arrayOfLines[line].length; characterInstance++){
 						chadtechCanvas.drawImage(characters[arrayOfLines[line][characterInstance]].bigImage,(characterInstance*12)+96,(16*line)+32)
@@ -452,6 +472,7 @@
 					currentlyPressedKeys.push(event.keyCode);
 				}
 				documentUpdate();
+				event.preventDefault();
 			}
 
 			function keyEventUp(event){
