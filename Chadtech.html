@@ -209,7 +209,26 @@
 			characters.push(new character([],[keyToKeyCodeDictionaries[0]['space']],[],'','')); // Space only requires the space bar
 			characters.push(new character([],[keyToKeyCodeDictionaries[0]['enter']],[],'','')); // Enter only requires the enter key
 
-			characters.push(new character([],[keyToKeyCodeDictionaries[0]['period']],[keyToKeyCodeDictionaries[0]['shift']], '', '' )); 
+			// Punctuation
+			characters.push(new character([],[keyToKeyCodeDictionaries[0]['period']],[keyToKeyCodeDictionaries[0]['shift']],'','')); 
+			characters.push(new character([],[keyToKeyCodeDictionaries[0]['comma']],[keyToKeyCodeDictionaries[0]['shift']],'',''));
+			characters.push(new character([],[keyToKeyCodeDictionaries[0]['semicolon']],[keyToKeyCodeDictionaries[0]['shift']],'',''));
+			characters.push(new character([keyToKeyCodeDictionaries[0]['shift']],[keyToKeyCodeDictionaries[0]['semicolon']],[],'',''));
+			characters.push(new character([],[keyToKeyCodeDictionaries[0]['single quote']],[keyToKeyCodeDictionaries[0]['shift']],'',''));
+			characters.push(new character([keyToKeyCodeDictionaries[0]['shift']],[keyToKeyCodeDictionaries[0]['single quote']],[],'',''));
+			characters.push(new character([keyToKeyCodeDictionaries[0]['shift']],[keyToKeyCodeDictionaries[0]['forward slash']],[],'',''));
+			characters.push(new character([keyToKeyCodeDictionaries[0]['shift']],[keyToKeyCodeDictionaries[0]['1']],[],'',''));
+
+			// Brackets
+			characters.push(new character([keyToKeyCodeDictionaries[0]['shift']],[keyToKeyCodeDictionaries[0]['9']],[],'',''));
+			characters.push(new character([keyToKeyCodeDictionaries[0]['shift']],[keyToKeyCodeDictionaries[0]['0']],[],'',''));
+			characters.push(new character([keyToKeyCodeDictionaries[0]['shift']],[keyToKeyCodeDictionaries[0]['left bracket']],[],'',''));
+			characters.push(new character([keyToKeyCodeDictionaries[0]['shift']],[keyToKeyCodeDictionaries[0]['right bracket']],[],'',''));
+			characters.push(new character([],[keyToKeyCodeDictionaries[0]['left bracket']],[keyToKeyCodeDictionaries[0]['shift']],'',''));
+			characters.push(new character([],[keyToKeyCodeDictionaries[0]['right bracket']],[keyToKeyCodeDictionaries[0]['shift']],'',''));
+			// These two dont work for known reasons ---v
+			characters.push(new character([keyToKeyCodeDictionaries[0]['c']],[keyToKeyCodeDictionaries['left bracket']],[],'',''));
+			characters.push(new character([keyToKeyCodeDictionaries[0]['c']],[keyToKeyCodeDictionaries['right bracket']],[],'',''));
 
 			function zeroPadder(number,zerosToFill){
 				var numberAsString = number+'';
