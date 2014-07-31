@@ -230,6 +230,23 @@
 			characters.push(new character([keyToKeyCodeDictionaries[0]['c']],[keyToKeyCodeDictionaries['left bracket']],[],'',''));
 			characters.push(new character([keyToKeyCodeDictionaries[0]['c']],[keyToKeyCodeDictionaries['right bracket']],[],'',''));
 
+			// Slashes
+			characters.push(new character([],[keyToKeyCodeDictionaries[0]['forward slash']],[keyToKeyCodeDictionaries[0]['shift']],'',''));
+			characters.push(new character([],[keyToKeyCodeDictionaries[0]['back slash']],[keyToKeyCodeDictionaries[0]['shift']],'',''));
+			characters.push(new character([keyToKeyCodeDictionaries[0]['shift']],[keyToKeyCodeDictionaries[0]['back slash']],[],'',''));
+
+			// Numbers
+			characters.push(new character([],[keyToKeyCodeDictionaries[0]['0']],[keyToKeyCodeDictionaries[0]['shift']],'',''));
+			characters.push(new character([],[keyToKeyCodeDictionaries[0]['1']],[keyToKeyCodeDictionaries[0]['shift']],'',''));
+			characters.push(new character([],[keyToKeyCodeDictionaries[0]['2']],[keyToKeyCodeDictionaries[0]['shift']],'',''));
+			characters.push(new character([],[keyToKeyCodeDictionaries[0]['3']],[keyToKeyCodeDictionaries[0]['shift']],'',''));
+			characters.push(new character([],[keyToKeyCodeDictionaries[0]['4']],[keyToKeyCodeDictionaries[0]['shift']],'',''));
+			characters.push(new character([],[keyToKeyCodeDictionaries[0]['5']],[keyToKeyCodeDictionaries[0]['shift']],'',''));
+			characters.push(new character([],[keyToKeyCodeDictionaries[0]['6']],[keyToKeyCodeDictionaries[0]['shift']],'',''));
+			characters.push(new character([],[keyToKeyCodeDictionaries[0]['7']],[keyToKeyCodeDictionaries[0]['shift']],'',''));
+			characters.push(new character([],[keyToKeyCodeDictionaries[0]['8']],[keyToKeyCodeDictionaries[0]['shift']],'',''));
+			characters.push(new character([],[keyToKeyCodeDictionaries[0]['9']],[keyToKeyCodeDictionaries[0]['shift']],'',''));
+
 			function zeroPadder(number,zerosToFill){
 				var numberAsString = number+'';
 				while (numberAsString.length<zerosToFill){
