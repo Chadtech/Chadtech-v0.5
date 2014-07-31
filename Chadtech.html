@@ -261,7 +261,7 @@
 			}
 
 			var commands = [];
-			var megaMagnitude = 6;
+			var megaMagnitude = 3;
 
 			function command(permittingConditions,triggers,precludingConditions,execution){
 				this.permittingConditions=permittingConditions;
@@ -328,25 +328,25 @@
 			}));
 
 			commands.push(new command([keyToKeyCodeDictionaries[0]['ctrl']],[keyToKeyCodeDictionaries[0]['left']],[],function megaLeftOver(){
-				for (var time = 0; time < megaMagnitude; time++){
+				for (var time = 0; time < Math.pow(2,megaMagnitude); time++){
 					commands[2].execution();
 				}
 			}));
 
 			commands.push(new command([keyToKeyCodeDictionaries[0]['ctrl']],[keyToKeyCodeDictionaries[0]['right']],[],function megaRightOver(){
-				for (var time = 0; time < megaMagnitude; time++){
+				for (var time = 0; time < Math.pow(2,megaMagnitude); time++){
 					commands[3].execution();
 				}
 			}));
 
 			commands.push(new command([keyToKeyCodeDictionaries[0]['alt']],[keyToKeyCodeDictionaries[0]['up']],[],function megaUpOver(){
-				for (var time=0; time < megaMagnitude; time++){
+				for (var time=0; time < Math.pow(2,megaMagnitude); time++){
 					commands[4].execution();
 				}
 			}));
 
 			commands.push(new command([keyToKeyCodeDictionaries[0]['alt']],[keyToKeyCodeDictionaries[0]['down']],[],function megaDownOver(){
-				for (var time=0; time<megaMagnitude; time++){
+				for (var time=0; time<Math.pow(2,megaMagnitude); time++){
 					commands[5].execution();
 				}
 			}));
