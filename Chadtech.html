@@ -123,13 +123,13 @@
 
 			// (0) if the latest key pressed, was a trigger key for that character.;
 
-			// (1) if there are permitting conditions, and if so, that at least one is
+			// (1) if there are necessary conditions, and if so, that at least one is
 			// met. For example, capital A and lowercase are both triggered by the a key,
-			// but shift is a permitting condition for capital A.;
+			// but shift is a necessary condition for capital A.;
 
-			// Though I have called them 'permitting conditions', if there are
+			// Though I have called them 'necessary conditions', if there are
 			// any of them, it is necessary (not merely permitted) that at least
-			// one is met. I call them 'permitting conditions', because each one
+			// one is met. I call them 'necessary conditions', because each one
 			// permits the character, but each one is not necessary (but there being
 			// at least one is).
 
@@ -140,8 +140,8 @@
 			// Specifying both is necessary. Without precluding conditions for example
 			// pressing shift and then a would add to the documnet 'Aa'
 
-			function character(permittingConditions,triggers,precludingConditions,bigImage,lilImage){
-				this.permittingConditions = permittingConditions;
+			function character(necessaryConditions,triggers,precludingConditions,bigImage,lilImage){
+				this.necessaryConditions = necessaryConditions;
 				this.triggers = triggers;
 				this.precludingConditions = precludingConditions;
 				this.bigImage = bigImage;
@@ -263,8 +263,8 @@
 			var commands = [];
 			var megaMagnitude = 3;
 
-			function command(permittingConditions,triggers,precludingConditions,execution){
-				this.permittingConditions=permittingConditions;
+			function command(necessaryConditions,triggers,precludingConditions,execution){
+				this.necessaryConditions=necessaryConditions;
 				this.triggers=triggers;
 				this.precludingConditions=precludingConditions;
 				this.execution=execution;
@@ -460,11 +460,11 @@
 				for (var characterItem=0; characterItem<characters.length && keepGoingThroughCharacters; characterItem++){
 					for (var aTrigger=0; aTrigger<characters[characterItem].triggers.length; aTrigger++){
 						if (characters[characterItem].triggers[aTrigger]==justPressedKey){
-							var passedAPermittingCondition = true;
-							if (characters[characterItem].permittingConditions.length){
-								for (var aPermittingCondition=0; aPermittingCondition<characters[characterItem].permittingConditions.length; aPermittingCondition++){
-									if (currentlyPressedKeys.indexOf(characters[characterItem].permittingConditions[aPermittingCondition])== -1){
-										passedAPermittingCondition=false;
+							var passedANecessaryCondition = true;
+							if (characters[characterItem].necessaryConditions.length){
+								for (var aNecessaryCondition=0; aNecessaryCondition<characters[characterItem].necessaryConditions.length; aNecessaryCondition++){
+									if (currentlyPressedKeys.indexOf(characters[characterItem].necessaryConditions[aNecessaryCondition])== -1){
+										passedANecessaryCondition=false;
 									}
 								}
 							}
@@ -474,7 +474,7 @@
 									passedPrecludingConditions=false;
 								}
 							}
-							if (passedPrecludingConditions && passedAPermittingCondition){
+							if (passedPrecludingConditions && passedANecessaryCondition){
 								keepGoingThroughCharacters=false
 								rawDocument.splice(currentCursorSpot,0,characterItem);
 								currentCursorSpot+=1;
@@ -486,11 +486,11 @@
 				for (var commandItem=0; commandItem<commands.length && keepGoingThroughCommands; commandItem++){
 					for (var aTrigger=0; aTrigger<commands[commandItem].triggers.length; aTrigger++){
 						if(commands[commandItem].triggers[aTrigger]==justPressedKey){
-							var passedAPermittingCondition = !commands[commandItem].permittingConditions.length;
-							if (!passedAPermittingCondition){
-								for (var aPermittingCondition=0; aPermittingCondition<commands[commandItem].permittingConditions.length; aPermittingCondition++){
-									if (currentlyPressedKeys.indexOf(commands[commandItem].permittingConditions[aPermittingCondition])!= -1){
-										passedAPermittingCondition=true;
+							var passedANecessaryCondition = !commands[commandItem].necessaryConditions.length;
+							if (!passedANecessaryCondition){
+								for (var aNecessaryCondition=0; aNecessaryCondition<commands[commandItem].necessaryConditions.length; aNecessaryCondition++){
+									if (currentlyPressedKeys.indexOf(commands[commandItem].necessaryConditions[aNecessaryCondition])!= -1){
+										passedANecessaryCondition=true;
 									}
 								}
 							}
@@ -500,7 +500,7 @@
 									passedPrecludingConditions=false;
 								}
 							}
-							if(passedAPermittingCondition && passedPrecludingConditions){
+							if(passedANecessaryCondition && passedPrecludingConditions){
 								commands[commandItem].execution();
 								keepGoingThroughCommands=false;
 							}
