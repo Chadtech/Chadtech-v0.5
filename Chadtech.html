@@ -5,7 +5,7 @@
 			setInterval(draw,100);
 			var xMargin = 96;
 			var yMargin = 32;
-			var chadtechEpoch = Date.now();
+			var lineSpace = 8;
 			var keysToKeyCodes = {
 				'backspace':8,
 				'tab':9,
@@ -281,8 +281,11 @@
 					currentCursorSpot=0;
 				}
 				else{
-					for (var time=0; time< arrayOfLines[cursorsLine-1].length; time++){
-						commands[2].execution();
+					if (arrayOfLines[cursorsLine-1].length > cursorInLine){
+						currentCursorSpot-=arrayOfLines[cursorsLine-1].length+1;
+					}
+					else{
+						currentCursorSpot-=cursorInLine+1
 					}
 				}
 			}));
@@ -292,11 +295,11 @@
 					currentCursorSpot=rawDocument.length;
 				}
 				else{
-					for (var time=0; time<(arrayOfLines[cursorsLine].length-cursorInLine); time++){
-						commands[3].execution();
+					if (arrayOfLines[cursorsLine+1].length < cursorInLine){
+						currentCursorSpot+=(arrayOfLines[cursorsLine].length-cursorInLine)+arrayOfLines[cursorsLine+1].length+1;
 					}
-					for (var time=0; time<cursorInLine && time<arrayOfLines[cursorsLine+1].length; time++){
-						commands[3].execution();
+					else{
+						currentCursorSpot+=arrayOfLines[cursorsLine].length+1;
 					}
 				}
 			}));
@@ -311,6 +314,12 @@
 				for (var time = 0; time < megaMagnitude; time++){
 					commands[3].execution();
 				}
+			}));
+			commands.push(new command([keyToKeyCodeDictionaries[0]['alt']],[keyToKeyCodeDictionaries[0]['equals']],[],function increaseLineSpace(){
+				lineSpace+=1;
+			}));
+			commands.push(new command([keyToKeyCodeDictionaries[0]['alt']],[keyToKeyCodeDictionaries[0]['minus']],[],function decreaseLineSpace(){
+				lineSpace-=1;
 			}));
 
 			var rawDocument = [];
@@ -393,10 +402,10 @@
 				chadtechCanvas.fillRect(0,0,window.innerWidth,window.innerHeight + 400);
 				for (var line=0; line<arrayOfLines.length; line++){
 					for (var characterInstance=0; characterInstance<arrayOfLines[line].length; characterInstance++){
-						chadtechCanvas.drawImage(characters[arrayOfLines[line][characterInstance]].bigImage,(characterInstance*12)+96,(16*line)+32)
+						chadtechCanvas.drawImage(characters[arrayOfLines[line][characterInstance]].bigImage,(characterInstance*12)+96,((16+lineSpace)*line)+32)
 					}
 				}
-				chadtechCanvas.drawImage(cursorImage,(cursorInLine*12)+96,(cursorsLine*16)+32);
+				chadtechCanvas.drawImage(cursorImage,(cursorInLine*12)+96,(cursorsLine*(16+lineSpace))+32);
 				writeData();
 			}
 
