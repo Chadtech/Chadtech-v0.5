@@ -293,7 +293,7 @@
 				}
 			}));
 
-			commands.push(new command([],[keyToKeyCodeDictionaries[0]['up']],[],function upOver(){
+			commands.push(new command([],[keyToKeyCodeDictionaries[0]['up']],[keyToKeyCodeDictionaries[0]['alt']],function upOver(){
 				if (cursorsLine==0){
 					currentCursorSpot=0;
 				}
@@ -305,9 +305,12 @@
 						currentCursorSpot-=cursorInLine+1
 					}
 				}
+				if (currentCursorSpot < 0){
+					currentCursorSpot=0;
+				}
 			}));
 
-			commands.push(new command([],[keyToKeyCodeDictionaries[0]['down']],[],function downOver(){
+			commands.push(new command([],[keyToKeyCodeDictionaries[0]['down']],[keyToKeyCodeDictionaries[0]['alt']],function downOver(){
 				if ((cursorsLine+1)==arrayOfLines.length){
 					currentCursorSpot=rawDocument.length;
 				}
@@ -319,6 +322,9 @@
 						currentCursorSpot+=arrayOfLines[cursorsLine].length+1;
 					}
 				}
+				if (currentCursorSpot > rawDocument.length){
+					currentCursorSpot = rawDocument.length;
+				}
 			}));
 
 			commands.push(new command([keyToKeyCodeDictionaries[0]['ctrl']],[keyToKeyCodeDictionaries[0]['left']],[],function megaLeftOver(){
@@ -327,14 +333,28 @@
 				}
 			}));
 
-			commands.push(new command([keyToKeyCodeDictionaries[0]['ctrl']],[keyToKeyCodeDictionaries[0]['left']],[],function megaRightOver(){
+			commands.push(new command([keyToKeyCodeDictionaries[0]['ctrl']],[keyToKeyCodeDictionaries[0]['right']],[],function megaRightOver(){
 				for (var time = 0; time < megaMagnitude; time++){
 					commands[3].execution();
 				}
 			}));
+
+			commands.push(new command([keyToKeyCodeDictionaries[0]['alt']],[keyToKeyCodeDictionaries[0]['up']],[],function megaUpOver(){
+				for (var time=0; time < megaMagnitude; time++){
+					commands[4].execution();
+				}
+			}));
+
+			commands.push(new command([keyToKeyCodeDictionaries[0]['alt']],[keyToKeyCodeDictionaries[0]['down']],[],function megaDownOver(){
+				for (var time=0; time<megaMagnitude; time++){
+					commands[5].execution();
+				}
+			}));
+
 			commands.push(new command([keyToKeyCodeDictionaries[0]['alt']],[keyToKeyCodeDictionaries[0]['equals']],[],function increaseLineSpace(){
 				lineSpace+=1;
 			}));
+
 			commands.push(new command([keyToKeyCodeDictionaries[0]['alt']],[keyToKeyCodeDictionaries[0]['minus']],[],function decreaseLineSpace(){
 				lineSpace-=1;
 			}));
