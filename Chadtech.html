@@ -169,7 +169,7 @@
 			characters.push(new character([],[keyToKeyCodeDictionaries[0]['p']],[keyToKeyCodeDictionaries[0]['shift']], '', '' ));
 			characters.push(new character([],[keyToKeyCodeDictionaries[0]['q']],[keyToKeyCodeDictionaries[0]['shift']], '', '' ));
 			characters.push(new character([],[keyToKeyCodeDictionaries[0]['r']],[keyToKeyCodeDictionaries[0]['shift']], '', '' ));
-			characters.push(new character([],[keyToKeyCodeDictionaries[0]['s']],[keyToKeyCodeDictionaries[0]['left command'],keyToKeyCodeDictionaries[0]['right command'],keyToKeyCodeDictionaries[0]['shift']], '', '' ));
+			characters.push(new character([],[keyToKeyCodeDictionaries[0]['s']],[keyToKeyCodeDictionaries[0]['shift']], '', '' ));
 			characters.push(new character([],[keyToKeyCodeDictionaries[0]['t']],[keyToKeyCodeDictionaries[0]['shift']], '', '' ));
 			characters.push(new character([],[keyToKeyCodeDictionaries[0]['u']],[keyToKeyCodeDictionaries[0]['shift']], '', '' ));
 			characters.push(new character([],[keyToKeyCodeDictionaries[0]['v']],[keyToKeyCodeDictionaries[0]['shift']], '', '' ));
@@ -311,17 +311,6 @@
 				for (var time = 0; time < megaMagnitude; time++){
 					commands[3].execution();
 				}
-			}));
-
-			commands.push(new command([keyToKeyCodeDictionaries[0]['left command'],[keyToKeyCodeDictionaries[0]['right command']]],[keyToKeyCodeDictionaries[0]['s']],[],function saveImage(){
-				console.log('DOIN A SAVE');
-				var chadtechCanvas = document.getElementById("Chadtech-v0.5");
-				console.log('YES THIS IS CANVAS',chadtechCanvas);
-				var chadtechContext = chadtechCanvas.getContext("2d");
-				console.log('YES THIS IS CONTEXT',chadtechContext);
-				var documentToSave = chadtechCanvas.toDataURL();
-				window.location.href=documentToSave;
-				document.getElementById('chadtechCanvasImage').src = documentToSave;
 			}));
 
 			var rawDocument = [];
@@ -489,8 +478,6 @@
 				for (var pixel=0;pixel<bunchaPixels.length;pixel++){
 					var singleCanvasSpot=chadtechCanvas.createImageData(1,1);
 					var colorValues=singleCanvasSpot.data;
-					console.log(bunchaPixels[pixel]);
-
 					colorValues[0]=bunchaPixels[pixel][0];
 					colorValues[1]=bunchaPixels[pixel][1];
 					colorValues[2]=bunchaPixels[pixel][2];
@@ -517,7 +504,7 @@
 	</head>
 	<body onkeydown="keyEventDown(event); draw()" onresize="draw()" onkeyup="keyEventUp(event)">
     	<div style="position: absolute; top:0px; left:0px;">
-		<canvas id="Chadtech-v0.5" width="800" height="800" style=" background-color:#000000;"></canvas>
+			<canvas id="Chadtech-v0.5" width="800" height="800" style=" background-color:#000000;"></canvas>
 		</div>
 	</body>
 </html>
