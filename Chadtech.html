@@ -163,7 +163,7 @@
 			characters.push(new character([],[keyToKeyCodeDictionaries[0]['j']],[keyToKeyCodeDictionaries[0]['shift']], '', '' ));
 			characters.push(new character([],[keyToKeyCodeDictionaries[0]['k']],[keyToKeyCodeDictionaries[0]['shift']], '', '' ));
 			characters.push(new character([],[keyToKeyCodeDictionaries[0]['l']],[keyToKeyCodeDictionaries[0]['shift']], '', '' ));
-			characters.push(new character([],[keyToKeyCodeDictionaries[0]['m']],[keyToKeyCodeDictionaries[0]['shift']], '', '' ));
+			characters.push(new character([],[keyToKeyCodeDictionaries[0]['m']],[keyToKeyCodeDictionaries[0]['shift'],keyToKeyCodeDictionaries[0]['alt']], '', '' ));
 			characters.push(new character([],[keyToKeyCodeDictionaries[0]['n']],[keyToKeyCodeDictionaries[0]['shift']], '', '' ));
 			characters.push(new character([],[keyToKeyCodeDictionaries[0]['o']],[keyToKeyCodeDictionaries[0]['shift']], '', '' ));
 			characters.push(new character([],[keyToKeyCodeDictionaries[0]['p']],[keyToKeyCodeDictionaries[0]['shift']], '', '' ));
@@ -351,14 +351,23 @@
 				}
 			}));
 
-			commands.push(new command([keyToKeyCodeDictionaries[0]['alt']],[keyToKeyCodeDictionaries[0]['equals']],[],function increaseLineSpace(){
+			commands.push(new command([keyToKeyCodeDictionaries[0]['alt']],[keyToKeyCodeDictionaries[0]['equals']],[keyToKeyCodeDictionaries[0]['m']],function increaseLineSpace(){
 				lineSpace+=1;
 			}));
 
-			commands.push(new command([keyToKeyCodeDictionaries[0]['alt']],[keyToKeyCodeDictionaries[0]['minus']],[],function decreaseLineSpace(){
+			commands.push(new command([keyToKeyCodeDictionaries[0]['alt']],[keyToKeyCodeDictionaries[0]['minus']],[keyToKeyCodeDictionaries[0]['m']],function decreaseLineSpace(){
 				lineSpace-=1;
 			}));
 
+			commands.push(new command([keyToKeyCodeDictionaries[0]['alt'],keyToKeyCodeDictionaries[0]['m']],[keyToKeyCodeDictionaries[0]['equals']],[], function megaIncrease(){
+					megaMagnitude+=1;
+
+			}));
+
+			commands.push(new command([keyToKeyCodeDictionaries[0]['alt'],keyToKeyCodeDictionaries[0]['m']],[keyToKeyCodeDictionaries[0]['minus']],[], function megaIncrease(){
+					megaMagnitude-=1;
+
+			}));
 			var rawDocument = [];
 			var justPressedKey;
 			var currentCursorSpot = 0;
@@ -451,11 +460,11 @@
 				for (var characterItem=0; characterItem<characters.length && keepGoingThroughCharacters; characterItem++){
 					for (var aTrigger=0; aTrigger<characters[characterItem].triggers.length; aTrigger++){
 						if (characters[characterItem].triggers[aTrigger]==justPressedKey){
-							var passedAPermittingCondition = !characters[characterItem].permittingConditions.length;
-							if (!passedAPermittingCondition){
+							var passedAPermittingCondition = true;
+							if (characters[characterItem].permittingConditions.length){
 								for (var aPermittingCondition=0; aPermittingCondition<characters[characterItem].permittingConditions.length; aPermittingCondition++){
-									if (currentlyPressedKeys.indexOf(characters[characterItem].permittingConditions[aPermittingCondition])!= -1){
-										passedAPermittingCondition=true;
+									if (currentlyPressedKeys.indexOf(characters[characterItem].permittingConditions[aPermittingCondition])== -1){
+										passedAPermittingCondition=false;
 									}
 								}
 							}
