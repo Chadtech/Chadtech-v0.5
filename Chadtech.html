@@ -356,13 +356,12 @@
 
 			commands.push(new command([keyToKeyCodeDictionaries[0]['alt'],keyToKeyCodeDictionaries[0]['m']],[keyToKeyCodeDictionaries[0]['equals']],[], function megaIncrease(){
 					megaMagnitude+=1;
-
 			}));
 
 			commands.push(new command([keyToKeyCodeDictionaries[0]['alt'],keyToKeyCodeDictionaries[0]['m']],[keyToKeyCodeDictionaries[0]['minus']],[], function megaIncrease(){
 					megaMagnitude-=1;
-
 			}));
+
 			var rawDocument = [];
 			var justPressedKey;
 			var currentCursorSpot = 0;
@@ -437,10 +436,16 @@
 			function draw(){
 				var chadtechCanvas = document.getElementById("Chadtech-v0.5").getContext("2d");
 				chadtechCanvas.canvas.width = window.innerWidth;
-				chadtechCanvas.canvas.height = window.innerHeight + 400;
+				if (window.innerHeight < ((arrayOfLines.length*(16+lineSpace))+64)){
+					chadtechCanvas.canvas.height = (arrayOfLines.length*(16+lineSpace))+64
+				}
+				else{
+					chadtechCanvas.canvas.height = window.innerHeight;
+				}
+
 				organizeWords();
 				chadtechCanvas.fillStyle="#000000";
-				chadtechCanvas.fillRect(0,0,window.innerWidth,window.innerHeight + 400);
+				chadtechCanvas.fillRect(0,0,window.innerWidth,window.innerHeight);
 				for (var line=0; line<arrayOfLines.length; line++){
 					for (var characterInstance=0; characterInstance<arrayOfLines[line].length; characterInstance++){
 						chadtechCanvas.drawImage(characters[arrayOfLines[line][characterInstance]].bigImage,(characterInstance*12)+96,((16+lineSpace)*line)+32)
