@@ -121,24 +121,19 @@
 			// Each character is invoked by a series of combinations of key strokes.
 			// Chadtech will run through each character type, and check, in this order:
 
-			// (0) if the latest key pressed, was a trigger key for that character.;
+			// (0) If the latest key pressed, was a trigger key for that character.;
 
-			// (1) if there are necessary conditions, and if so, that at least one is
+			// (1) If there are necessary conditions, and if so, that at all are 
 			// met. For example, capital A and lowercase are both triggered by the a key,
 			// but shift is a necessary condition for capital A.;
 
-			// Though I have called them 'necessary conditions', if there are
-			// any of them, it is necessary (not merely permitted) that at least
-			// one is met. I call them 'necessary conditions', because each one
-			// permits the character, but each one is not necessary (but there being
-			// at least one is).
-
-			// (2) that there are no precluding conditions met. For example,
+			// (2) That there are no precluding conditions met. For example,
 			// shift being currently pressed is a precudling condition
 			// for lower case a.
 
-			// Specifying both is necessary. Without precluding conditions for example
-			// pressing shift and then a would add to the documnet 'Aa'
+			// Specifying both precluding and necessary conditions is necessary.
+			// Without precluding conditions for example pressing shift and 
+			// then a would add to the documnet 'Aa'
 
 			function character(necessaryConditions,triggers,precludingConditions,bigImage,lilImage){
 				this.necessaryConditions = necessaryConditions;
