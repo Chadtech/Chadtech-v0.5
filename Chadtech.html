@@ -433,7 +433,7 @@
 				arrayOfLines = differentArrayOfLines;
 			}
 
-			function draw(){
+			function draw(event){
 				var chadtechCanvas = document.getElementById("Chadtech-v0.5").getContext("2d");
 				chadtechCanvas.canvas.width = window.innerWidth;
 				if (window.innerHeight < ((arrayOfLines.length*(16+lineSpace))+64)){
@@ -442,7 +442,11 @@
 				else{
 					chadtechCanvas.canvas.height = window.innerHeight;
 				}
-
+				if ((cursorsLine*(16+lineSpace)+96) - window.innerHeight < 124){
+					if (currentlyPressedKeys.length){
+						window.scrollBy(0,16+lineSpace);					
+					}
+				}
 				organizeWords();
 				chadtechCanvas.fillStyle="#000000";
 				chadtechCanvas.fillRect(0,0,window.innerWidth,window.innerHeight);
@@ -557,7 +561,7 @@
 
 		</script>
 	</head>
-	<body onkeydown="keyEventDown(event); draw()" onresize="draw()" onkeyup="keyEventUp(event)">
+	<body onkeydown="keyEventDown(event); draw(event)" onresize="draw()" onkeyup="keyEventUp(event)">
     	<div style="position: absolute; top:0px; left:0px;">
 			<canvas id="Chadtech-v0.5" width="800" height="800" style=" background-color:#000000;"></canvas>
 		</div>
