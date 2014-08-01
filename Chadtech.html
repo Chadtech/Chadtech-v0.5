@@ -433,7 +433,7 @@
 				arrayOfLines = differentArrayOfLines;
 			}
 
-			function draw(event){
+			function draw(){
 				var chadtechCanvas = document.getElementById("Chadtech-v0.5").getContext("2d");
 				chadtechCanvas.canvas.width = window.innerWidth;
 				if (window.innerHeight < ((arrayOfLines.length*(16+lineSpace))+64)){
@@ -442,7 +442,7 @@
 				else{
 					chadtechCanvas.canvas.height = window.innerHeight;
 				}
-				if ((cursorsLine*(16+lineSpace)+96) - window.innerHeight < 124){
+				if ( window.innerHeight-(cursorsLine*(16+lineSpace)+96+window.pageYOffset) < 124){
 					if (currentlyPressedKeys.length){
 						window.scrollBy(0,16+lineSpace);					
 					}
@@ -545,6 +545,12 @@
 				}
 			}
 
+			function onMouseDown(event){
+				xSpot = event.clientX;
+				ySpot = event.clientY;
+				console.log(xSpot,ySpot);
+			}
+
 			function keyEventDown(event){
 				justPressedKey=event.keyCode;
 				if (currentlyPressedKeys.indexOf(event.keyCode)== -1){
@@ -561,7 +567,7 @@
 
 		</script>
 	</head>
-	<body onkeydown="keyEventDown(event); draw(event)" onresize="draw()" onkeyup="keyEventUp(event)">
+	<body onkeydown="keyEventDown(event); draw()" onmousedown="onMouseDown(event)" onresize="draw()" onkeyup="keyEventUp(event)">
     	<div style="position: absolute; top:0px; left:0px;">
 			<canvas id="Chadtech-v0.5" width="800" height="800" style=" background-color:#000000;"></canvas>
 		</div>
