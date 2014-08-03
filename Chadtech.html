@@ -270,8 +270,15 @@
 				currentCursorSpot-=1;
 			}));
 
+			commands.push(new command([keyToKeyCodeDictionaries[0]['ctrl']],[keyToKeyCodeDictionaries[0]['backspace']],[],function megaBackSpace(){
+				for (var time = 0; time < Math.pow(2,megaMagnitude); time++){
+					commands[0].execution();				
+				}
+			}));
+
 			// Naming a function 'delete' returns an error. So I named it 'reverse backspace' instead. This command is fn + backspace on mac
 			// and delete on PC
+
 			commands.push(new command([],[keyToKeyCodeDictionaries[0]['delete']],[],function reverseBackspace(){
 				rawDocument.splice(currentCursorSpot,1);
 			}));
@@ -324,25 +331,25 @@
 
 			commands.push(new command([keyToKeyCodeDictionaries[0]['ctrl']],[keyToKeyCodeDictionaries[0]['left']],[],function megaLeftOver(){
 				for (var time = 0; time < Math.pow(2,megaMagnitude); time++){
-					commands[2].execution();
+					commands[3].execution();
 				}
 			}));
 
 			commands.push(new command([keyToKeyCodeDictionaries[0]['ctrl']],[keyToKeyCodeDictionaries[0]['right']],[],function megaRightOver(){
 				for (var time = 0; time < Math.pow(2,megaMagnitude); time++){
-					commands[3].execution();
+					commands[4].execution();
 				}
 			}));
 
 			commands.push(new command([keyToKeyCodeDictionaries[0]['alt']],[keyToKeyCodeDictionaries[0]['up']],[],function megaUpOver(){
 				for (var time=0; time < Math.pow(2,megaMagnitude); time++){
-					commands[4].execution();
+					commands[5].execution();
 				}
 			}));
 
 			commands.push(new command([keyToKeyCodeDictionaries[0]['alt']],[keyToKeyCodeDictionaries[0]['down']],[],function megaDownOver(){
 				for (var time=0; time<Math.pow(2,megaMagnitude); time++){
-					commands[5].execution();
+					commands[6].execution();
 				}
 			}));
 
@@ -442,7 +449,7 @@
 				else{
 					chadtechCanvas.canvas.height = window.innerHeight;
 				}
-				if ( window.innerHeight-(cursorsLine*(16+lineSpace)+96+window.pageYOffset) < 124){
+				if (window.innerHeight-(cursorsLine*(16+lineSpace)+96+window.pageYOffset) < 124){
 					if (currentlyPressedKeys.length){
 						window.scrollBy(0,16+lineSpace);					
 					}
