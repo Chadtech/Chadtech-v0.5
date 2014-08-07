@@ -561,6 +561,7 @@
 			function keyEventDown(event){
 				justPressedKey=event.keyCode;
 				if (currentlyPressedKeys.indexOf(event.keyCode)== -1){
+					console.log(FileReader);
 					currentlyPressedKeys.push(event.keyCode);
 				}
 				documentUpdate();
@@ -572,10 +573,32 @@
 				currentlyPressedKeys.splice(indexToRemove,1);
 			}
 
+			function onDragOver(){
+				event.preventDefault();
+				return false;
+			}
+
+			function fileLoad(){
+				var chadtechCanvas = document.getElementById("Chadtech-v0.5");
+				var chadtechContext = chadtechCanvas.getContext("2d");
+				event.preventDefault();
+				var imageReader = new FileReader();
+				imageReader.onloadend = (function(theFile) {
+					var fileName = theFile.name;
+					return function(e){
+						console.log('TARGET DOT RESULT',e.target.result);
+						var imageToPaste = new Image();
+						imageToPaste.src = e.target.result;
+						chadtechContext.drawImage(imageToPaste,0,0);
+					};
+				})(event.dataTransfer.files[0]);
+				imageReader.readAsDataURL(event.dataTransfer.files[0]);
+			}
+
 		</script>
 	</head>
-	<body onkeydown="keyEventDown(event); draw()" onmousedown="onMouseDown(event)" onresize="draw()" onkeyup="keyEventUp(event)">
-    	<div style="position: absolute; top:0px; left:0px;">
+	<body ondragover="onDragOver()" ondrop="fileLoad()" onkeydown="keyEventDown(event); draw()" onmousedown="onMouseDown(event)" onresize="draw()" onkeyup="keyEventUp(event)">
+		<div style="position: absolute; top:0px; left:0px;">
 			<canvas id="Chadtech-v0.5" width="800" height="800" style=" background-color:#000000;"></canvas>
 		</div>
 	</body>
