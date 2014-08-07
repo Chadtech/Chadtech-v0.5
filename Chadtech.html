@@ -555,13 +555,11 @@
 			function onMouseDown(event){
 				xSpot = event.clientX;
 				ySpot = event.clientY;
-				console.log(xSpot,ySpot);
 			}
 
 			function keyEventDown(event){
 				justPressedKey=event.keyCode;
 				if (currentlyPressedKeys.indexOf(event.keyCode)== -1){
-					console.log(FileReader);
 					currentlyPressedKeys.push(event.keyCode);
 				}
 				documentUpdate();
@@ -586,7 +584,6 @@
 				imageReader.onloadend = (function(theFile) {
 					var fileName = theFile.name;
 					return function(e){
-						console.log('TARGET DOT RESULT',e.target.result);
 						var imageToPaste = new Image();
 						imageToPaste.src = e.target.result;
 						chadtechContext.drawImage(imageToPaste,0,0);
