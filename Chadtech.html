@@ -580,16 +580,18 @@
 				var chadtechCanvas = document.getElementById("Chadtech-v0.5");
 				var chadtechContext = chadtechCanvas.getContext("2d");
 				event.preventDefault();
-				var imageReader = new FileReader();
-				imageReader.onloadend = (function(theFile) {
-					var fileName = theFile.name;
-					return function(e){
-						var imageToPaste = new Image();
-						imageToPaste.src = e.target.result;
-						chadtechContext.drawImage(imageToPaste,0,0);
-					};
-				})(event.dataTransfer.files[0]);
-				imageReader.readAsDataURL(event.dataTransfer.files[0]);
+				if (event.dataTransfer.files[0].type.slice(0,5) == 'image'){
+					var imageReader = new FileReader();
+					imageReader.onloadend = (function(theFile) {
+						var fileName = theFile.name;
+						return function(e){
+							var imageToPaste = new Image();
+							imageToPaste.src = e.target.result;
+							chadtechContext.drawImage(imageToPaste,0,0);
+						};
+					})(event.dataTransfer.files[0]);
+					imageReader.readAsDataURL(event.dataTransfer.files[0]);
+				}
 			}
 
 		</script>
