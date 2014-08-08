@@ -242,6 +242,9 @@
 			characters.push(new character([],[keyToKeyCodeDictionaries[0]['8']],[keyToKeyCodeDictionaries[0]['shift']],'',''));
 			characters.push(new character([],[keyToKeyCodeDictionaries[0]['9']],[keyToKeyCodeDictionaries[0]['shift']],'',''));
 
+			// Dummy Character
+			characters.push(new character([keyToKeyCodeDictionaries[0]['escape']],[],[keyToKeyCodeDictionaries[0]['escape']],'',''));
+
 			function zeroPadder(number,zerosToFill){
 				var numberAsString = number+'';
 				while (numberAsString.length<zerosToFill){
@@ -530,17 +533,29 @@
 					documentAsData.push(ze);
 					documentAsData.push(on);
 				}
+
 				var bunchaPixels=[];
 				var singlePixel=[];
-				var singlePixelMeter=0;
+
+				bunchaPixels.push([2,1,3,255]);
+
 				for (var datum=0;datum<documentAsData.length;datum++){
 					singlePixel.push(documentAsData[datum]);
 					if(singlePixel.length==3){
 						bunchaPixels.push(singlePixel);
 						singlePixel=[];
 					}
-
 				}
+				if (singlePixel.length>0 && 3>singlePixel.length){
+					while (3>singlePixel.length){
+						singlePixel.push(83);
+					}
+				}
+				else{
+					singlePixel=[83,83,83];
+				}
+				bunchaPixels.push(singlePixel);
+
 				for (var pixel=0;pixel<bunchaPixels.length;pixel++){
 					var singleCanvasSpot=chadtechCanvas.createImageData(1,1);
 					var colorValues=singleCanvasSpot.data;
@@ -580,6 +595,7 @@
 				var chadtechCanvas = document.getElementById("Chadtech-v0.5");
 				var chadtechContext = chadtechCanvas.getContext("2d");
 				event.preventDefault();
+
 				if (event.dataTransfer.files[0].type.slice(0,5) == 'image'){
 					var imageReader = new FileReader();
 					imageReader.onloadend = (function(theFile) {
@@ -588,15 +604,58 @@
 							var imageToPaste = new Image();
 							imageToPaste.src = e.target.result;
 							chadtechContext.drawImage(imageToPaste,0,0);
+
+							var authenticChadtechDocument=false;
+							if ( chadtechContext.getImageData(0,0,1,1).data[0]==2 && chadtechContext.getImageData(0,0,1,1).data[1]==1 && chadtechContext.getImageData(0,0,1,1).data[2]==3){
+								authenticChadtechDocument=true;
+							}
+
+							if (authenticChadtechDocument){
+								var rawPixelData = [];
+								var reconstructedDocumentData = [];
+
+								var grabbingThisPixel=1;
+								var keepGrabbing=true;
+								while(keepGrabbing){
+									var thisPixel = chadtechContext.getImageData(Math.floor(grabbingThisPixel/window.innerHeight),grabbingThisPixel%window.innerHeight,1,1).data;
+									for (var colorType=0; colorType<3 && keepGrabbing; colorType++){
+										if (thisPixel[colorType]==83){
+											keepGrabbing=false;
+										}
+										else{
+											rawPixelData.push(thisPixel[colorType]);
+										}
+									}
+									grabbingThisPixel+=1;
+								}
+
+								var ze;
+								var on;
+								for (var pixelDatum=0; pixelDatum < rawPixelData.length; pixelDatum++){
+									if (pixelDatum%2==0){
+										ze = rawPixelData[pixelDatum]*256;
+									}
+									else{
+										on = rawPixelData[pixelDatum];
+										reconstructedDocumentData.push(ze+on);
+									}
+								}
+								rawDocument=reconstructedDocumentData;
+							}
+							else{
+								draw();
+							}
 						};
 					})(event.dataTransfer.files[0]);
 					imageReader.readAsDataURL(event.dataTransfer.files[0]);
 				}
+
+
 			}
 
 		</script>
 	</head>
-	<body ondragover="onDragOver()" ondrop="fileLoad()" onkeydown="keyEventDown(event); draw()" onmousedown="onMouseDown(event)" onresize="draw()" onkeyup="keyEventUp(event)">
+	<body onload="draw()" ondragover="onDragOver()" ondrop="fileLoad()" onkeydown="keyEventDown(event); draw()" onmousedown="onMouseDown(event)" onresize="draw()" onkeyup="keyEventUp(event)">
 		<div style="position: absolute; top:0px; left:0px;">
 			<canvas id="Chadtech-v0.5" width="800" height="800" style=" background-color:#000000;"></canvas>
 		</div>
