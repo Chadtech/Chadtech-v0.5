@@ -161,9 +161,9 @@
 			characters.push(new character([],[keyToKeyCodeDictionaries[0]['k']],[keyToKeyCodeDictionaries[0]['shift'],keyToKeyCodeDictionaries[0]['greek'],keyToKeyCodeDictionaries[0]['alt']], '',''));
 			characters.push(new character([],[keyToKeyCodeDictionaries[0]['l']],[keyToKeyCodeDictionaries[0]['shift'],keyToKeyCodeDictionaries[0]['greek']], '',''));
 			characters.push(new character([],[keyToKeyCodeDictionaries[0]['m']],[keyToKeyCodeDictionaries[0]['shift'],keyToKeyCodeDictionaries[0]['alt'],keyToKeyCodeDictionaries[0]['greek']], '',''));
-			characters.push(new character([],[keyToKeyCodeDictionaries[0]['n']],[keyToKeyCodeDictionaries[0]['shift'],keyToKeyCodeDictionaries[0]['greek'],keyToKeyCodeDictionaries[0]['alt']], '',''));
+			characters.push(new character([],[keyToKeyCodeDictionaries[0]['n']],[keyToKeyCodeDictionaries[0]['shift'],keyToKeyCodeDictionaries[0]['greek'],keyToKeyCodeDictionaries[0]['alt'],keyToKeyCodeDictionaries[0]['2']], '',''));
 			characters.push(new character([],[keyToKeyCodeDictionaries[0]['o']],[keyToKeyCodeDictionaries[0]['shift'],keyToKeyCodeDictionaries[0]['greek'],keyToKeyCodeDictionaries[0]['alt']], '',''));
-			characters.push(new character([],[keyToKeyCodeDictionaries[0]['p']],[keyToKeyCodeDictionaries[0]['shift'],keyToKeyCodeDictionaries[0]['greek']], '',''));
+			characters.push(new character([],[keyToKeyCodeDictionaries[0]['p']],[keyToKeyCodeDictionaries[0]['shift'],keyToKeyCodeDictionaries[0]['greek'],keyToKeyCodeDictionaries[0]['2']], '',''));
 			characters.push(new character([],[keyToKeyCodeDictionaries[0]['q']],[keyToKeyCodeDictionaries[0]['shift'],keyToKeyCodeDictionaries[0]['greek'],keyToKeyCodeDictionaries[0]['alt']], '',''));
 			characters.push(new character([],[keyToKeyCodeDictionaries[0]['r']],[keyToKeyCodeDictionaries[0]['shift'],keyToKeyCodeDictionaries[0]['greek'],keyToKeyCodeDictionaries[0]['alt']], '',''));
 			characters.push(new character([],[keyToKeyCodeDictionaries[0]['s']],[keyToKeyCodeDictionaries[0]['shift'],keyToKeyCodeDictionaries[0]['greek'],keyToKeyCodeDictionaries[0]['alt']], '',''));
@@ -234,7 +234,7 @@
 			// Numbers
 			characters.push(new character([],[keyToKeyCodeDictionaries[0]['0']],[keyToKeyCodeDictionaries[0]['shift']],'',''));
 			characters.push(new character([],[keyToKeyCodeDictionaries[0]['1']],[keyToKeyCodeDictionaries[0]['shift']],'',''));
-			characters.push(new character([],[keyToKeyCodeDictionaries[0]['2']],[keyToKeyCodeDictionaries[0]['shift']],'',''));
+			characters.push(new character([],[keyToKeyCodeDictionaries[0]['2']],[keyToKeyCodeDictionaries[0]['shift'],keyToKeyCodeDictionaries[0]['alt']],'',''));
 			characters.push(new character([],[keyToKeyCodeDictionaries[0]['3']],[keyToKeyCodeDictionaries[0]['shift']],'',''));
 			characters.push(new character([],[keyToKeyCodeDictionaries[0]['4']],[keyToKeyCodeDictionaries[0]['shift']],'',''));
 			characters.push(new character([],[keyToKeyCodeDictionaries[0]['5']],[keyToKeyCodeDictionaries[0]['shift']],'',''));
@@ -330,6 +330,9 @@
 			characters.push(new character([keyToKeyCodeDictionaries[0]['equals'],keyToKeyCodeDictionaries[0]['alt']],[keyToKeyCodeDictionaries[0]['j']],[],'',''));
 			characters.push(new character([keyToKeyCodeDictionaries[0]['equals'],keyToKeyCodeDictionaries[0]['alt']],[keyToKeyCodeDictionaries[0]['k']],[],'',''));
 
+			// Modal 
+			characters.push(new character([keyToKeyCodeDictionaries[0]['2'],keyToKeyCodeDictionaries[0]['alt']],[keyToKeyCodeDictionaries[0]['p']],[],'',''));
+			characters.push(new character([keyToKeyCodeDictionaries[0]['2'],keyToKeyCodeDictionaries[0]['alt']],[keyToKeyCodeDictionaries[0]['n']],[],'',''));
 
 			function zeroPadder(number,zerosToFill){
 				var numberAsString = number+'';
