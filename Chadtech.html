@@ -107,7 +107,8 @@
 				'right bracket':221,
 				'single quote':222,
 
-				'greek':250
+				'greek':250,
+				'slanty':251
 			};
 
 			var keyCodesToKeys = {};
@@ -137,7 +138,7 @@
 			// Without precluding conditions for example pressing shift and 
 			// then a would add to the documnet 'Aa'
 
-			function character(necessaryConditions,triggers,precludingConditions,bigImage,greekImage,lilImage){
+			function character(necessaryConditions,triggers,precludingConditions,bigImage,lilImage){
 				this.necessaryConditions = necessaryConditions;
 				this.triggers = triggers;
 				this.precludingConditions = precludingConditions;
@@ -500,6 +501,15 @@
 				}
 			}));
 
+			commands.push(new command([ktkcDicts[0]['alt']],[ktkcDicts[0]['g']],[], function setSlanty(){
+				if (currentlyPressedKeys.indexOf(ktkcDicts[0]['slanty']) == -1){
+					currentlyPressedKeys.push(ktkcDicts[0]['slanty']);	
+				}
+				else{
+					currentlyPressedKeys.splice(currentlyPressedKeys.indexOf(ktkcDicts[0]['slanty']),1);
+				}
+			}));
+
 			var greekMode = false;
 
 			var rawDocument = [];
@@ -596,13 +606,7 @@
 				chadtechCanvas.fillRect(0,0,window.innerWidth,window.innerHeight+window.pageYOffset);
 				for (var line=0; line<arrayOfLines.length; line++){
 					for (var characterInstance=0; characterInstance<arrayOfLines[line].length; characterInstance++){
-						if (!greekMode){
-							chadtechCanvas.drawImage(characters[arrayOfLines[line][characterInstance]].bigImage,(characterInstance*12)+96,((16+lineSpace)*line)+32)
-						}
-						else{
-							chadtechCanvas.drawImage(characters[arrayOfLines[line][characterInstance]].greekImage,(characterInstance*12)+96,((16+lineSpace)*line)+32)
-						}
-
+						chadtechCanvas.drawImage(characters[arrayOfLines[line][characterInstance]].bigImage,(characterInstance*12)+96,((16+lineSpace)*line)+32)
 					}
 				}
 				chadtechCanvas.drawImage(cursorImage,(cursorInLine*12)+96,(cursorsLine*(16+lineSpace))+32);
