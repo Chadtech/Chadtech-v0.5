@@ -317,7 +317,7 @@
 			characters.push(new character([ktkc[0]['alt'],ktkc[0]['equals']],[ktkc[0]['d']],[],'',''));
 			characters.push(new character([ktkc[0]['alt'],ktkc[0]['equals']],[ktkc[0]['a']],[],'',''));
 			characters.push(new character([ktkc[0]['shift']],[ktkc[0]['equals']],[],'',''));
-			characters.push(new character([],[ktkc[0]['minus']],[ktkc[0]['shift']],'',''));
+			characters.push(new character([],[ktkc[0]['minus']],[ktkc[0]['shift'],ktkc[0]['alt']],'',''));
 			characters.push(new character([ktkc[0]['equals'],ktkc[0]['alt']],[ktkc[0]['m']],[],'',''));
 			characters.push(new character([ktkc[0]['equals'],ktkc[0]['alt']],[ktkc[0]['q']],[],'',''));
 			characters.push(new character([ktkc[0]['equals'],ktkc[0]['alt']],[ktkc[0]['s']],[],'',''));
@@ -419,8 +419,6 @@
 			characters.push(new character([ktkc[0]['slanty'],ktkc[0]['shift']],[ktkc[0]['x']],[],'',''));
 			characters.push(new character([ktkc[0]['slanty'],ktkc[0]['shift']],[ktkc[0]['y']],[],'',''));
 			characters.push(new character([ktkc[0]['slanty'],ktkc[0]['shift']],[ktkc[0]['z']],[],'',''));
-
-
 
 			function zeroPadder(number,zerosToFill){
 				var numberAsString = number+'';
@@ -533,13 +531,13 @@
 				}
 			}));
 
-			//commands.push(new command([ktkc[0]['alt']],[ktkc[0]['s']],[ktkc[0]['equals']],function increaseLineSpace(){
-			//	lineSpace+=1;
-			//}));
+			commands.push(new command([ktkc[0]['alt'],ktkc[0]['ctrl']],[ktkc[0]['equals']],[],function increaseLineSpace(){
+				lineSpace+=1;
+			}));
 
-			//commands.push(new command([ktkc[0]['alt']],[ktkc[0]['s']],[ktkc[0]['minus']],function decreaseLineSpace(){
-			//	lineSpace-=1;
-			//}));
+			commands.push(new command([ktkc[0]['alt'],ktkc[0]['ctrl']],[ktkc[0]['minus']],[],function decreaseLineSpace(){
+				lineSpace-=1;
+			}));
 
 			commands.push(new command([ktkc[0]['alt'],ktkc[0]['m']],[ktkc[0]['equals']],[], function megaIncrease(){
 					megaMagnitude+=1;
