@@ -565,8 +565,6 @@
 				}
 			}));
 
-			var greekMode = false;
-
 			var rawDocument = [];
 			var justPressedKey;
 			var currentCursorSpot = 0;
@@ -583,13 +581,13 @@
 			function organizeWords(){
 				arrayOfWords = [[]];
 				for (var documentCharacter=0; documentCharacter<rawDocument.length; documentCharacter++){
-					switch(rawDocument[documentCharacter]){
+					switch(rawDocument[documentCharacter][0]){
 						case 52:
 							arrayOfWords[arrayOfWords.length-1].push(rawDocument[documentCharacter]);
 							arrayOfWords.push([]);
 							break;
 						case 53:
-							arrayOfWords.push([53]);
+							arrayOfWords.push([[53,[],[]]]);
 							arrayOfWords.push([]);
 							break;
 						default:
@@ -606,25 +604,27 @@
 				arrayOfLines = [[]];
 				lineLengthInCharacters = 0;
 				for (var word = 0; word<arrayOfWords.length; word++){
-					if (arrayOfWords[word][0]==53){
-						arrayOfLines.push([]);
-						lineLengthInCharacters=0;
-					}
-					else{
-						if ((lineLengthInCharacters+arrayOfWords[word].length)<(Math.floor((window.innerWidth-(96*2))/12))){
-							arrayOfLines[arrayOfLines.length-1].push(arrayOfWords[word]);
-							lineLengthInCharacters+=arrayOfWords[word].length;
-						}
-						else{
+					if (arrayOfWords[word].length){
+						if (arrayOfWords[word][0][0]==53){
 							arrayOfLines.push([]);
-							arrayOfLines[arrayOfLines.length-1].push(arrayOfWords[word]);
-							lineLengthInCharacters=arrayOfWords[word].length;
-						}
+							lineLengthInCharacters=0;
+						}	
+						else{
+							if ((lineLengthInCharacters+arrayOfWords[word].length)<(Math.floor((window.innerWidth-(96*2))/12))){
+								arrayOfLines[arrayOfLines.length-1].push(arrayOfWords[word]);
+								lineLengthInCharacters+=arrayOfWords[word].length;
+							}
+							else{
+								arrayOfLines.push([]);
+								arrayOfLines[arrayOfLines.length-1].push(arrayOfWords[word]);
+								lineLengthInCharacters=arrayOfWords[word].length;
+							}
+						}				
 					}
 					if (wordCursorIsIn==word){
 						cursorsLine = arrayOfLines.length-1;
 						cursorInLine = lineLengthInCharacters - (arrayOfWords[word].length-characterInWord-1);
-					}
+					}	
 				}
 				var differentArrayOfLines=[];
 				for (var line = 0; line < arrayOfLines.length; line++){
@@ -642,7 +642,6 @@
 				if ( currentCursorSpot < 0){
 					currentCursorSpot = 0;
 				}
-
 				var chadtechCanvas = document.getElementById("Chadtech-v0.5").getContext("2d");
 				chadtechCanvas.canvas.width = window.innerWidth;
 				if (window.innerHeight < ((arrayOfLines.length*(16+lineSpace))+64)){
@@ -661,7 +660,7 @@
 				chadtechCanvas.fillRect(0,0,window.innerWidth,window.innerHeight+window.pageYOffset);
 				for (var line=0; line<arrayOfLines.length; line++){
 					for (var characterInstance=0; characterInstance<arrayOfLines[line].length; characterInstance++){
-						chadtechCanvas.drawImage(characters[arrayOfLines[line][characterInstance]].bigImage,(characterInstance*12)+96,((16+lineSpace)*line)+32)
+						chadtechCanvas.drawImage(characters[arrayOfLines[line][characterInstance][0]].bigImage,(characterInstance*12)+96,((16+lineSpace)*line)+32)
 					}
 				}
 				chadtechCanvas.drawImage(cursorImage,(cursorInLine*12)+96,(cursorsLine*(16+lineSpace))+32);
@@ -687,7 +686,7 @@
 							}
 							if (passedPrecludingConditions && passedNecessaryConditions){
 								keepGoingThroughCharacters=false;
-								rawDocument.splice(currentCursorSpot,0,characterItem);
+								rawDocument.splice(currentCursorSpot,0,[characterItem,[],[]]);
 								currentCursorSpot+=1;
 							}
 						}
@@ -725,8 +724,8 @@
 				var chadtechCanvas = document.getElementById("Chadtech-v0.5").getContext("2d");
 				documentAsData=[];
 				for (var documentItem=0;documentItem<rawDocument.length;documentItem++){
-					ze=Math.floor(rawDocument[documentItem]/256);
-					on=rawDocument[documentItem]%256;
+					ze=Math.floor(rawDocument[documentItem][0]/256);
+					on=rawDocument[documentItem][0]%256;
 					documentAsData.push(ze);
 					documentAsData.push(on);
 				}
@@ -776,7 +775,6 @@
 				}
 				documentUpdate();
 				event.preventDefault();
-				console.log('CURRENTLY PRESSED KEYS',currentlyPressedKeys);
 			}
 
 			function keyEventUp(event){
@@ -835,7 +833,7 @@
 									}
 									else{
 										on = rawPixelData[pixelDatum];
-										reconstructedDocumentData.push(ze+on);
+										reconstructedDocumentData.push([ze+on,[],[]]);
 									}
 								}
 								rawDocument=reconstructedDocumentData;
