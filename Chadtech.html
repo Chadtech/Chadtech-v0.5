@@ -531,11 +531,11 @@
 				}
 			}));
 
-			commands.push(new command([ktkc[0]['alt'],ktkc[0]['ctrl']],[ktkc[0]['equals']],[],function increaseLineSpace(){
+			commands.push(new command([ktkc[0]['alt'],ktkc[0]['ctrl']],[ktkc[0]['equals']],[ktkc[0]['shift']],function increaseLineSpace(){
 				lineSpace+=1;
 			}));
 
-			commands.push(new command([ktkc[0]['alt'],ktkc[0]['ctrl']],[ktkc[0]['minus']],[],function decreaseLineSpace(){
+			commands.push(new command([ktkc[0]['alt'],ktkc[0]['ctrl']],[ktkc[0]['minus']],[ktkc[0]['shift']],function decreaseLineSpace(){
 				lineSpace-=1;
 			}));
 
@@ -553,6 +553,7 @@
 				}
 				else{
 					currentlyPressedKeys.splice(currentlyPressedKeys.indexOf(ktkc[0]['greek']),1);
+					commands[0].execution();
 				}
 			}));
 
@@ -562,8 +563,11 @@
 				}
 				else{
 					currentlyPressedKeys.splice(currentlyPressedKeys.indexOf(ktkc[0]['slanty']),1);
+					commands[0].execution();
 				}
 			}));
+
+
 
 			var rawDocument = [];
 			var justPressedKey;
