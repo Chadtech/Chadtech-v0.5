@@ -311,14 +311,14 @@
 			characters.push(new character([ktkc[0]['greek'],ktkc[0]['shift']],[ktkc[0]['w']],[],'',''));
 
 			// Math
-			characters.push(new character([],[ktkc[0]['equals']],[ktkc[0]['shift'],ktkc[0]['alt']],'',''));
+			characters.push(new character([],[ktkc[0]['equals']],[ktkc[0]['shift'],ktkc[0]['alt'],ktkc[0]['tilda']],'',''));
 			characters.push(new character([ktkc[0]['shift']],[ktkc[0]['period']],[ktkc[0]['alt']],'',''));
 			characters.push(new character([ktkc[0]['shift']],[ktkc[0]['comma']],[ktkc[0]['alt']],'',''));
 			characters.push(new character([ktkc[0]['shift'],ktkc[0]['alt']],[ktkc[0]['period']],[],'',''));
 			characters.push(new character([ktkc[0]['shift'],ktkc[0]['alt']],[ktkc[0]['comma']],[],'',''));
 			characters.push(new character([ktkc[0]['alt'],ktkc[0]['equals']],[ktkc[0]['d']],[],'',''));
 			characters.push(new character([ktkc[0]['alt'],ktkc[0]['equals']],[ktkc[0]['a']],[],'',''));
-			characters.push(new character([ktkc[0]['shift']],[ktkc[0]['equals']],[ktkc[0]['alt']],'',''));
+			characters.push(new character([ktkc[0]['shift']],[ktkc[0]['equals']],[ktkc[0]['alt'],ktkc[0]['tilda']],'',''));
 			characters.push(new character([],[ktkc[0]['minus']],[ktkc[0]['shift'],ktkc[0]['alt']],'',''));
 			characters.push(new character([ktkc[0]['equals'],ktkc[0]['alt']],[ktkc[0]['m']],[],'',''));
 			characters.push(new character([ktkc[0]['equals'],ktkc[0]['alt']],[ktkc[0]['q']],[],'',''));
@@ -423,7 +423,6 @@
 			characters.push(new character([ktkc[0]['slanty'],ktkc[0]['shift']],[ktkc[0]['z']],[],'',''));
 
 			// Underscore
-
 			characters.push(new character([ktkc[0]['shift']],[ktkc[0]['minus']],[],'',''));
 
 			function zeroPadder(number,zerosToFill){
@@ -481,7 +480,7 @@
 				}
 			}));
 
-			commands.push(new command([],[ktkc[0]['up']],[ktkc[0]['alt'],ktkc[0]['tab']],function upOver(){
+			commands.push(new command([],[ktkc[0]['up']],[ktkc[0]['alt'],ktkc[0]['tab'],ktkc[0]['tilda']],function upOver(){
 				if (cursorsLine==0){
 					currentCursorSpot=0;
 				}
@@ -498,7 +497,7 @@
 				}
 			}));
 
-			commands.push(new command([],[ktkc[0]['down']],[ktkc[0]['alt'],ktkc[0]['tab']],function downOver(){
+			commands.push(new command([],[ktkc[0]['down']],[ktkc[0]['alt'],ktkc[0]['tab'],ktkc[0]['tilda']],function downOver(){
 				if ((cursorsLine+1)==arrayOfLines.length){
 					currentCursorSpot=rawDocument.length;
 				}
@@ -539,19 +538,19 @@
 				}
 			}));
 
-			commands.push(new command([ktkc[0]['alt'],ktkc[0]['ctrl']],[ktkc[0]['equals']],[ktkc[0]['shift']],function increaseLineSpace(){
+			commands.push(new command([ktkc[0]['tilda']],[ktkc[0]['up']],[],function increaseLineSpace(){
 				lineSpace+=1;
 			}));
 
-			commands.push(new command([ktkc[0]['alt'],ktkc[0]['ctrl']],[ktkc[0]['minus']],[ktkc[0]['shift']],function decreaseLineSpace(){
+			commands.push(new command([ktkc[0]['tilda']],[ktkc[0]['down']],[],function decreaseLineSpace(){
 				lineSpace-=1;
 			}));
 
-			commands.push(new command([ktkc[0]['alt'],ktkc[0]['m']],[ktkc[0]['equals']],[], function megaIncrease(){
+			commands.push(new command([ktkc[0]['tilda']],[ktkc[0]['equals']],[], function megaIncrease(){
 					megaMagnitude+=1;
 			}));
 
-			commands.push(new command([ktkc[0]['alt'],ktkc[0]['m']],[ktkc[0]['minus']],[], function megaIncrease(){
+			commands.push(new command([ktkc[0]['tilda']],[ktkc[0]['minus']],[], function megaIncrease(){
 					megaMagnitude-=1;
 			}));
 
