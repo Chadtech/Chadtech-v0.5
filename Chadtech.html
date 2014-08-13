@@ -432,13 +432,10 @@
 
 			for (var characterItem = 0; characterItem<characters.length; characterItem++){
 				characters[characterItem].bigImage = new Image();
-				characters[characterItem].bigImage.src='w'+zeroPadder(characterItem,4)+'.PNG';
+				characters[characterItem].bigImage.src = 'w'+zeroPadder(characterItem,4)+'.PNG';
+				characters[characterItem].lilImage = new Image();
+				characters[characterItem].lilImage.src = 'x'+zeroPadder(characterItem,4)+'.PNG';
 			}
-
-			characters[0].lilImage = new Image();
-			characters[0].lilImage.src = 'x'+zeroPadder(0,4)+'.PNG';
-			characters[1].lilImage = new Image();
-			characters[1].lilImage.src = 'x'+zeroPadder(1,4)+'.PNG';
 
 			var commands = [];
 			var megaMagnitude = 3;
@@ -694,6 +691,9 @@
 						chadtechCanvas.drawImage(characters[arrayOfLines[line][characterInstance][0]].bigImage,(characterInstance*12)+96,((16+lineSpace)*line)+32)
 						for (var superscriptCharacterItem=0; superscriptCharacterItem<arrayOfLines[line][characterInstance][1].length; superscriptCharacterItem++){
 							chadtechCanvas.drawImage(characters[arrayOfLines[line][characterInstance][1][superscriptCharacterItem]].lilImage,((characterInstance+1)*12)+89+(superscriptCharacterItem*6),((16+lineSpace)*line)+24);
+						}
+						for (var subscriptCharacterItem=0; subscriptCharacterItem<arrayOfLines[line][characterInstance][2].length; subscriptCharacterItem++){
+							chadtechCanvas.drawImage(characters[arrayOfLines[line][characterInstance][2][subscriptCharacterItem]].lilImage,((characterInstance+1)*12)+89+(subscriptCharacterItem*6),((16+lineSpace)*line)+48);
 						}
 					}
 				}
