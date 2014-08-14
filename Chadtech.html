@@ -655,6 +655,7 @@ by element.
 
 */
 function organizeWords(){
+	var lineLength = Math.floor((window.innerWidth-(96*2))/12);
 	arrayOfWords = [[]];
 	for (var documentCharacter=0; documentCharacter<rawDocument.length; documentCharacter++){
 		switch(rawDocument[documentCharacter][0]){
@@ -754,7 +755,8 @@ function draw(){
 	else{
 		chadtechCanvas.canvas.height = window.innerHeight;
 	}
-	if (window.innerHeight-(cursorsLine*(16+lineSpace)+96+window.pageYOffset) < 124){
+
+	if ( ((arrayOfLines.length*(16+lineSpace))+64)-(window.pageYOffset+32+(cursorsLine*(16+lineSpace))) < 124 ){
 		if (currentlyPressedKeys.length){
 			window.scrollBy(0,16+lineSpace);					
 		}
@@ -763,7 +765,7 @@ function draw(){
 	//    (B)
 	organizeWords();
 	chadtechCanvas.fillStyle="#000000";
-	chadtechCanvas.fillRect(0,0,window.innerWidth,window.innerHeight+window.pageYOffset);
+	chadtechCanvas.fillRect(0,0,window.innerWidth,(arrayOfLines.length*(16+lineSpace))+64);
 
 	for (var line=0; line<arrayOfLines.length; line++){
 		for (var characterInstance=0; characterInstance<arrayOfLines[line].length; characterInstance++){
@@ -1026,6 +1028,7 @@ function fileLoad(){
 	var chadtechCanvas = document.getElementById("Chadtech-v0.5");
 	var chadtechContext = chadtechCanvas.getContext("2d");
 	event.preventDefault();
+	var fileNameOfDroppedFile=event.dataTransfer.files[0].name;
 	if (event.dataTransfer.files[0].type.slice(0,5) == 'image'){
 		var imageReader = new FileReader();
 		imageReader.onloadend = (function(theFile) {
@@ -1037,7 +1040,7 @@ function fileLoad(){
 				var authenticChadtechDocument=false;
 				//       (A)
 				if (chadtechContext.getImageData(0,0,1,1).data[0]==2 && chadtechContext.getImageData(0,0,1,1).data[1]==1 && chadtechContext.getImageData(0,0,1,1).data[2]==3){
-					document.title = event.dataTransfer.files[0].name;
+					document.title = fileNameOfDroppedFile;
 					authenticChadtechDocument=true;
 				}
 				if (authenticChadtechDocument){
@@ -1068,7 +1071,7 @@ function fileLoad(){
 						}
 						else{
 							secondByte = rawPixelData[pixelDatum];
-							reconstructedDocumentData.push([ze+on,[],[]]);
+							reconstructedDocumentData.push([firstByte+secondByte,[],[]]);
 						}
 					}
 					rawDocument=reconstructedDocumentData;
@@ -1082,7 +1085,7 @@ function fileLoad(){
 	}
 }
 
-draw();
+//draw();
 
 		</script>
 	</head>
