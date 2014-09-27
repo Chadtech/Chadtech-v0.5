@@ -1,3 +1,6 @@
-The following link is a proper readme as a Chadtech file:
-http://i.imgur.com/nnzHtd4.png
+This link goes to a proper readme as a Chadtech file: http://i.imgur.com/nnzHtd4.png
+
+This link is a guide to all the short keys in Chadtech: http://i.imgur.com/2LioAp8.png
+
+
 
